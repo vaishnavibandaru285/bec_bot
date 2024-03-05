@@ -88,7 +88,7 @@ async def btech_button_callback(update , context) ->None:
     await query.answer()
     courses_info = """
            Course         Seats Available
-        CSE   =>  120
+        CSE   =>  180
         IT      =>  120
         ECE   =>  120
         EEE   =>  120
@@ -144,6 +144,7 @@ async def canteen_button_callback(update , context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
