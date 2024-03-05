@@ -144,6 +144,18 @@ async def canteen_button_callback(update , context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+async def result_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("http://www.becbapatla.ac.in:8080/html/results.html")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
@@ -157,5 +169,6 @@ app.add_handler(CallbackQueryHandler(btech_button_callback, pattern='btech'))
 app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facilities'))
 app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transport'))
 app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen'))
+app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
 app.add_handler(CallbackQueryHandler(exit_button_callback, pattern='exit'))
 app.run_polling()
