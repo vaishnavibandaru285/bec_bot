@@ -144,6 +144,8 @@ async def canteen_button_callback(update , context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def result_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
