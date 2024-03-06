@@ -35,12 +35,16 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     button7 = InlineKeyboardButton('Placements', callback_data='placements')
     button8 = InlineKeyboardButton('Admission process', callback_data='admission')
     button9 = InlineKeyboardButton('Departments', callback_data='departments')
+    button10 = InlineKeyboardButton('Location', callback_data='location')
+    button11 = InlineKeyboardButton('Contact Us', callback_data='contact')
+
 
     keyboard = InlineKeyboardMarkup([
         [button1, button2],
         [button3, button4],
         [button5, button6],
         [button7, button8],
+        [button10,button11],
         [button9]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -393,8 +397,65 @@ async def instruments_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+
+async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Student Activities")
+    await query.message.reply_text("""🏛️Join the vibrant student community at our college, where you'll discover an array of opportunities to engage and grow through our diverse range of clubs and activities. Whether you're drawn to community service, leadership development, cultural expression, or creative arts, there's a welcoming space for you to explore and thrive in.
+
+    👮🏽‍♂️Immerse yourself in the spirit of service with clubs like the National Cadet Corps (NCC) and National Service Scheme (NSS), where you can make a meaningful impact through various community initiatives and projects. Develop valuable leadership skills and forge lifelong friendships as you work together towards common goals.
+
+    🎭Indulge your passion for the arts and unleash your creativity with the Creative Arts Club (CCA) and Literary Club(Awaaz). Whether you're an aspiring artist, writer, musician, or actor, you'll find endless opportunities, collaborate with fellow enthusiasts, and showcase your talents to the world.
+
+    🏛️At our college, the learning doesn't stop at the classroom door. Join us and be a part of an enriching college experience that goes beyond academics, where you can discover your passions, develop new skills, and create memories that will last a lifetime. Come, be a part of our vibrant community and embark on a journey of self-discovery and personal growth.""")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+
+async def location_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Location")
+    await query.message.reply_text("You can navigate through this Google location:\n\n\n https://maps.app.goo.gl/8Xoox4DaG4gd5ZBX7")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Contact Us")
+    await query.message.reply_text(""" 
+    Bapatla Engineering College
+    Bapatla-522101,
+    Guntur(Dt).,
+    Phone : +91-8643-224244
+    Mobile No: +91-9440730035
+    Fax : +91-8643-224246
+    email:: bec_principal@yahoo.com
+            bec_principal@becbapatla.ac.in """)
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+
 #app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
 app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+
 
 app.add_handler(CommandHandler("start", start))
 
@@ -412,6 +473,10 @@ app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen')
 app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
 app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
+app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
+app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
+app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact_us'))
+
 app.add_handler(CallbackQueryHandler(information_button_callback, pattern='information'))
 app.add_handler(CallbackQueryHandler(computer_button_callback, pattern='computer'))
 app.add_handler(CallbackQueryHandler(electronics_button_callback, pattern='electronics'))
