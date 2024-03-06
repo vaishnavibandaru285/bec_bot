@@ -393,8 +393,8 @@ async def instruments_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
-
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 app.add_handler(CommandHandler("start", start))
 
