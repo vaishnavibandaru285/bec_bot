@@ -34,17 +34,14 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     button6 = InlineKeyboardButton('Result', callback_data='result')
     button7 = InlineKeyboardButton('Placements', callback_data='placements')
     button8 = InlineKeyboardButton('Admission process', callback_data='admission')
-    button9 = InlineKeyboardButton('Fee Structure', callback_data='fee')
-    button10 = InlineKeyboardButton('Faculty', callback_data='faculty')
-    button11 = InlineKeyboardButton('Departments', callback_data='departments')
+    button9 = InlineKeyboardButton('Departments', callback_data='departments')
 
     keyboard = InlineKeyboardMarkup([
         [button1, button2],
         [button3, button4],
         [button5, button6],
         [button7, button8],
-        [button9, button10],
-        [button11]
+        [button9]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
@@ -52,6 +49,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
 async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    await query.message.reply_photo(open('admin.jpg', 'rb'))
     await query.message.reply_text("🏛️The Bapatla Engineering College(Autonomous).\n\n"
                                    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
                                    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
@@ -74,7 +72,7 @@ async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_
     button1 = InlineKeyboardButton("B.Tech", callback_data="btech")
     button2 = InlineKeyboardButton("M.Tech", callback_data="mtech")
     button3 = InlineKeyboardButton("MCA", callback_data="mca")
-    button4 = InlineKeyboardButton("Diploma", callback_data="diploma")
+    button4 = InlineKeyboardButton("Msc", callback_data="msc")
     keyboard = InlineKeyboardMarkup(
         [
             [button1, button2],
@@ -88,10 +86,75 @@ async def btech_button_callback(update , context) ->None:
     await query.answer()
     courses_info = """
            Course         Seats Available
-        CSE   =>  180
-        IT      =>  120
-        ECE   =>  120
-        EEE   =>  120
+        AIML   =>  180
+        CB      =>  120
+        CIVIL   =>  120
+        DS   =>  120
+        ECE  => 120
+        EEE  => 120
+        EIE  => 120
+        IT   => 120
+        ME   => 120
+        """
+    await query.message.reply_text(courses_info, parse_mode='Markdown')
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def mtech_button_callback(update , context) ->None:
+    query = update.callback_query
+    await query.answer()
+    courses_info = """
+           Course         Seats Available
+        Civil =>  6
+        CSE   =>  6
+        ECE   =>  6
+        EEE   =>  6
+        ME    =>  6
+        """
+    await query.message.reply_text(courses_info, parse_mode='Markdown')
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def mca_button_callback(update , context) ->None:
+    query = update.callback_query
+    await query.answer()
+    courses_info = """
+           Course         Seats Available
+        Civil =>  6
+        CSE   =>  6
+        ECE   =>  6
+        EEE   =>  6
+        ME    =>  6
+        """
+    await query.message.reply_text(courses_info, parse_mode='Markdown')
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+async def msc_button_callback(update , context) ->None:
+    query = update.callback_query
+    await query.answer()
+    courses_info = """
+           Course         Seats Available
+        Civil =>  6
+        CSE   =>  6
+        ECE   =>  6
+        EEE   =>  6
+        ME    =>  6
         """
     await query.message.reply_text(courses_info, parse_mode='Markdown')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -123,7 +186,8 @@ async def facilities_button_callback(update , context) -> None:
 async def transport_button_callback(update , context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("1.BEC - Bapatla(local) - BEC\n"
+    await query.message.reply_text("Bus facilities from routes :\n"
+                                   "1.BEC - Bapatla(local) - BEC\n"
                                     "2.BEC - Chirala - Pandillapalli - BEC\n"
                                     "3.BEC - Pharmacy Hostel - BEC")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -133,10 +197,34 @@ async def transport_button_callback(update , context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+async def library_button_callback(update , context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_photo(open('library.jpg', 'rb'),caption = "1.Area - 22,000sq.ft\n"
+                                   "2.No. of volumes - 78,972\n"
+                                   "3.No. of e-journals - 725\n"
+                                   "4.No. of titles - 29,296\n"
+                                   "5.No. of print journals - 86\n"
+                                   "6.No. of e-books - 858\n"
+                                   "7.No. of computer systems - 35\n"
+                                   "8.No. of back volumes of journals - 2,969\n"
+                                   "9.No. of NPTEL video courses - 236\n"
+                                   "10.No. of educational CD's - 3,261")
+    await query.message.reply_text("Library timings : 7AM - 6PM")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+
 async def canteen_button_callback(update , context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("A hygienic, well-furnished and well-equipped canteen is available in the campus to provide food at subsidized rates for the staff and students. Purified drinking water is supplied in the college, hostel and canteen.")
+    await query.message.reply_photo(open('canteen.jpg', 'rb'), caption="A hygienic, well-furnished and well-equipped canteen is available in the campus to provide food at subsidized rates for the staff and students. Purified drinking water is supplied in the college, hostel and canteen.")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -161,7 +249,11 @@ async def result_button_callback(update, context) -> None:
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('C:\Users\davam\Desktop\bec_bot\.idea\ci.jpg', 'rb'))
+    await query.message.reply_photo(open('ci.jpg','rb'))
+    await query.message.reply_photo(open('ci1.jpg','rb'))
+    await query.message.reply_photo(open('ci2.jpg','rb'))
+    await query.message.reply_photo(open('ci3.jpg','rb'))
+    await query.message.reply_photo(open('ci4.jpg','rb'))                                                                                                                               
     await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
                                     "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
                                     "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
@@ -179,6 +271,7 @@ async def placements_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
 
 async def departments_button_callback(update, context) -> None:
     query = update.callback_query
@@ -213,6 +306,8 @@ async def information_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def computer_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -260,6 +355,8 @@ async def mech_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def cyber_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -305,8 +402,12 @@ app.add_handler(CallbackQueryHandler(chat_button_callback, pattern='chat'))
 app.add_handler(CallbackQueryHandler(about_button_callback, pattern='about'))
 app.add_handler(CallbackQueryHandler(courses_button_callback, pattern='courses'))
 app.add_handler(CallbackQueryHandler(btech_button_callback, pattern='btech'))
+app.add_handler(CallbackQueryHandler(mtech_button_callback, pattern='mtech'))
+app.add_handler(CallbackQueryHandler(mca_button_callback, pattern='mca'))
+app.add_handler(CallbackQueryHandler(msc_button_callback, pattern='msc'))
 app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facilities'))
 app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transport'))
+app.add_handler(CallbackQueryHandler(library_button_callback, pattern='library'))
 app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen'))
 app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
 app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
