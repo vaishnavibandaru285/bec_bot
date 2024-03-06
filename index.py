@@ -144,6 +144,8 @@ async def canteen_button_callback(update , context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+    
 async def result_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -156,7 +158,141 @@ async def result_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
     
+async def placements_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
+                                    "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
+                                    "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
+                                    "Training & Placement Officer\n\n"
+                                    "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
+                                    "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
+                                    "Mobile:: 9849409947\n\n"
+                                    "Phone:: 08643224244\n\n"
+                                    "email:: becplacements@yahoo.com\n\n"
+                                            "placements@becbapatla.ac.in\n")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+async def departments_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    button1 = InlineKeyboardButton("CIVIL", callback_data="civil")
+    button2 = InlineKeyboardButton("CB&DS,AI&ML", callback_data="cyber")
+    button3 = InlineKeyboardButton("CSE", callback_data="computer")
+    button4 = InlineKeyboardButton("ECE", callback_data="electronics")
+    button5 = InlineKeyboardButton("EEE", callback_data="electrical")
+    button6 = InlineKeyboardButton("EIE", callback_data="instruments")
+    button7 = InlineKeyboardButton("IT", callback_data="information")
+    button8 = InlineKeyboardButton("MECH", callback_data="mech")
+
+    keyboard = InlineKeyboardMarkup(
+        [
+            [button1, button2],
+            [button3, button4],
+            [button5, button6],
+            [button7, button8]
+        ]
+    )
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def information_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("information technology.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+async def computer_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("computer science & engineering.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def electronics_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("electronics & communication engineering.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def civil_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("civil engineering.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def mech_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("mechanical engineering.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+async def cyber_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("cyber security & Data science,Artificial intelligence & machine learning")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def electrical_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("electrical & electronics engineering")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def instruments_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("electronics and instruments.")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
@@ -171,5 +307,15 @@ app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facili
 app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transport'))
 app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen'))
 app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
+app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
+app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
+app.add_handler(CallbackQueryHandler(information_button_callback, pattern='information'))
+app.add_handler(CallbackQueryHandler(computer_button_callback, pattern='computer'))
+app.add_handler(CallbackQueryHandler(electronics_button_callback, pattern='electronics'))
+app.add_handler(CallbackQueryHandler(civil_button_callback, pattern='civil'))
+app.add_handler(CallbackQueryHandler(mech_button_callback, pattern='mech'))
+app.add_handler(CallbackQueryHandler(cyber_button_callback, pattern='cyber'))
+app.add_handler(CallbackQueryHandler(electrical_button_callback, pattern='electrical'))
+app.add_handler(CallbackQueryHandler(instruments_button_callback, pattern='instruments'))
 app.add_handler(CallbackQueryHandler(exit_button_callback, pattern='exit'))
 app.run_polling()
