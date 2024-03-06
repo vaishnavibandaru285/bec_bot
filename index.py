@@ -267,6 +267,8 @@ async def placements_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def departments_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -300,6 +302,8 @@ async def information_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def computer_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -347,6 +351,8 @@ async def mech_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    
+    
 async def cyber_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
