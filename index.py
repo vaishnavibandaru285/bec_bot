@@ -281,20 +281,23 @@ async def departments_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     button1 = InlineKeyboardButton("CIVIL", callback_data="civil")
-    button2 = InlineKeyboardButton("CB&DS,AI&ML", callback_data="cyber")
-    button3 = InlineKeyboardButton("CSE", callback_data="computer")
-    button4 = InlineKeyboardButton("ECE", callback_data="electronics")
-    button5 = InlineKeyboardButton("EEE", callback_data="electrical")
-    button6 = InlineKeyboardButton("EIE", callback_data="instruments")
-    button7 = InlineKeyboardButton("IT", callback_data="information")
-    button8 = InlineKeyboardButton("MECH", callback_data="mech")
+    button2 = InlineKeyboardButton("CB", callback_data="cyber")
+    button3 = InlineKeyboardButton("DS", callback_data="ds")
+    button4 = InlineKeyboardButton("AI&ML", callback_data="aiml")
+    button5 = InlineKeyboardButton("CSE", callback_data="computer")
+    button6 = InlineKeyboardButton("ECE", callback_data="electronics")
+    button7 = InlineKeyboardButton("EEE", callback_data="electrical")
+    button8 = InlineKeyboardButton("EIE", callback_data="instruments")
+    button9 = InlineKeyboardButton("IT", callback_data="information")
+    button10 = InlineKeyboardButton("MECH", callback_data="mech")
 
     keyboard = InlineKeyboardMarkup(
         [
             [button1, button2],
             [button3, button4],
             [button5, button6],
-            [button7, button8]
+            [button7, button8],
+            [button9, button10]
         ]
     )
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -339,7 +342,10 @@ async def electronics_button_callback(update, context) -> None:
 async def civil_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("civil engineering.")
+    await query.message.reply_text("Staff :\n\n"
+                                   "1.No. of teaching staff - 10\n"
+                                   "2.No. of non-teaching staff - 5")
+    await query.message.reply_document(document=open('civil.pdf', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -513,7 +519,6 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
