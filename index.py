@@ -53,7 +53,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
 async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('admin.jpg', 'rb'))
+    await query.message.reply_photo(open('bec_bot/admin.jpg', 'rb'))
     await query.message.reply_text("🏛️The Bapatla Engineering College(Autonomous).\n\n"
                                    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
                                    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
@@ -403,6 +403,52 @@ async def instruments_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+async def rankings_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Rankings")
+    if query.data == 'rankings':
+        with open("bec_bot/NAAC.jpg", 'rb') as photo:
+            await context.bot.send_photo(chat_id=query.message.chat_id, photo=photo)
+    await query.message.reply_text("""
+      🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
+                                   
+       This stellar NAAC rating, alongside our sustained NBA recognition, celebrates our steadfast commitment to academic excellence 📚, cutting-edge teaching methodologies 🎓, and holistic student support 🤝. 
+                                   
+       We're proud to solidify our status as a leading institution in higher education, shining bright as a beacon of quality and innovation in learning. 🌈💫
+                                   """)
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+
+async def admission_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Admission process")
+    await query.message.reply_text(""" 
+    🌈 EAMCET Gateway 🚀: Unlock your future with admissions through the prestigious Engineering, Agriculture, and Medical Common Entrance Test. Dive into your dream career with us!
+
+    🏗️ Advance with ECET 🎓: Elevate your technical expertise! Diploma holders can leap into engineering degrees through the Engineering Common Entrance Test.
+
+    🤍 Empowering Specially-Abled Students ♿: Our inclusive seats ensure a barrier-free, empowering learning journey for specially-abled achievers. Your potential is limitless here!
+
+    ✨ Flexible Donation Seats 🏫: Missed EAMCET or ECET? No worries! Our donation seats offer a second chance to step into your desired field. Plus, donation contributions are branch-specific, ensuring opportunities are as diverse as your dreams.
+                                   
+    🎉 A Nurturing Academic Environment 📚: We're more than a college; we're a community committed to fostering diversity, excellence, and innovation. Join us to create, inspire, and succeed together!
+    """)
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
 
 async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
@@ -413,6 +459,8 @@ async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_
     👮🏽‍♂️Immerse yourself in the spirit of service with clubs like the National Cadet Corps (NCC) and National Service Scheme (NSS), where you can make a meaningful impact through various community initiatives and projects. Develop valuable leadership skills and forge lifelong friendships as you work together towards common goals.
 
     🎭Indulge your passion for the arts and unleash your creativity with the Creative Arts Club (CCA) and Literary Club(Awaaz). Whether you're an aspiring artist, writer, musician, or actor, you'll find endless opportunities, collaborate with fellow enthusiasts, and showcase your talents to the world.
+                                   
+    🏛️Codeverse, the coding club at your college, offers a dynamic platform for students to enhance their coding skills, engage in practical projects, and connect with like-minded peers.Through participation in coding challenges, and mentorship opportunities, members gain invaluable experience and preparation for tech careers.
 
     🏛️At our college, the learning doesn't stop at the classroom door. Join us and be a part of an enriching college experience that goes beyond academics, where you can discover your passions, develop new skills, and create memories that will last a lifetime. Come, be a part of our vibrant community and embark on a journey of self-discovery and personal growth.""")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -449,7 +497,18 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
     Mobile No: +91-9440730035
     Fax : +91-8643-224246
     email:: bec_principal@yahoo.com
-            bec_principal@becbapatla.ac.in """)
+            bec_principal@becbapatla.ac.in                 
+                        
+    Official pages: https://www.becbapatla.ac.in                                 
+
+    Connect us via:
+    Instagram:: https://www.instagram.com/becbapatlaofficial?igsh=MTNzdWFxZjFjYmxqMA==
+                                   
+    Facebook:: https://www.facebook.com/becbapatlaofficial/
+                                   
+    Twitter:: #BapatlaC
+                                      
+    """)
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -478,9 +537,11 @@ app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen')
 app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
 app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
+app.add_handler(CallbackQueryHandler(rankings_button_callback, pattern='rankings'))
 app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
+app.add_handler(CallbackQueryHandler(admission_button_callback, pattern='admission'))
 app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
-app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact_us'))
+app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
 
 app.add_handler(CallbackQueryHandler(information_button_callback, pattern='information'))
 app.add_handler(CallbackQueryHandler(computer_button_callback, pattern='computer'))
