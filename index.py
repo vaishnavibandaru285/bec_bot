@@ -397,6 +397,25 @@ async def instruments_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+async def rankings_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Rankings")
+    await query.message.reply_text("""
+      🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
+                                   
+       This stellar NAAC rating, alongside our sustained NBA recognition, celebrates our steadfast commitment to academic excellence 📚, cutting-edge teaching methodologies 🎓, and holistic student support 🤝. 
+                                   
+       We're proud to solidify our status as a leading institution in higher education, shining bright as a beacon of quality and innovation in learning. 🌈💫
+                                   """)
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
 
 async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
@@ -466,8 +485,8 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
@@ -486,6 +505,7 @@ app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen')
 app.add_handler(CallbackQueryHandler(result_button_callback, pattern='result'))
 app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
+app.add_handler(CallbackQueryHandler(rankings_button_callback, pattern='rankings'))
 app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
 app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
 app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
