@@ -407,6 +407,8 @@ async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_
     👮🏽‍♂️Immerse yourself in the spirit of service with clubs like the National Cadet Corps (NCC) and National Service Scheme (NSS), where you can make a meaningful impact through various community initiatives and projects. Develop valuable leadership skills and forge lifelong friendships as you work together towards common goals.
 
     🎭Indulge your passion for the arts and unleash your creativity with the Creative Arts Club (CCA) and Literary Club(Awaaz). Whether you're an aspiring artist, writer, musician, or actor, you'll find endless opportunities, collaborate with fellow enthusiasts, and showcase your talents to the world.
+                                   
+    🏛️Codeverse, the coding club at your college, offers a dynamic platform for students to enhance their coding skills, engage in practical projects, and connect with like-minded peers.Through participation in coding challenges, and mentorship opportunities, members gain invaluable experience and preparation for tech careers.
 
     🏛️At our college, the learning doesn't stop at the classroom door. Join us and be a part of an enriching college experience that goes beyond academics, where you can discover your passions, develop new skills, and create memories that will last a lifetime. Come, be a part of our vibrant community and embark on a journey of self-discovery and personal growth.""")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -443,7 +445,18 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
     Mobile No: +91-9440730035
     Fax : +91-8643-224246
     email:: bec_principal@yahoo.com
-            bec_principal@becbapatla.ac.in """)
+            bec_principal@becbapatla.ac.in                 
+                        
+    Official pages: https://www.becbapatla.ac.in                                 
+
+    Connect us via:
+    Instagram:: https://www.instagram.com/becbapatlaofficial?igsh=MTNzdWFxZjFjYmxqMA==
+                                   
+    Facebook:: https://www.facebook.com/becbapatlaofficial/
+                                   
+    Twitter:: #BapatlaC
+                                      
+    """)
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -475,7 +488,7 @@ app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placem
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
 app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
 app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
-app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact_us'))
+app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
 
 app.add_handler(CallbackQueryHandler(information_button_callback, pattern='information'))
 app.add_handler(CallbackQueryHandler(computer_button_callback, pattern='computer'))
