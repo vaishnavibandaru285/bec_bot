@@ -257,7 +257,12 @@ async def placements_button_callback(update, context) -> None:
     await query.message.reply_photo(open('ci1.jpg','rb'))
     await query.message.reply_photo(open('ci2.jpg','rb'))
     await query.message.reply_photo(open('ci3.jpg','rb'))
-    await query.message.reply_photo(open('ci4.jpg','rb'))                                                                                                                               
+    await query.message.reply_photo(open('ci4.jpg','rb'))
+    await query.message.reply_photo(open('bardetails.jpg','rb'))
+    await query.message.reply_photo(open('barg.png','rb'))
+    await query.message.reply_photo(open('2020-21pie.jpg','rb'))
+    await query.message.reply_photo(open('2021-22pie.jpg','rb'))
+    await query.message.reply_photo(open('2022-23pie.jpg','rb'))                                                                                                                               
     await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
                                     "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
                                     "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
