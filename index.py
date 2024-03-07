@@ -53,7 +53,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
 async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('admin.jpg', 'rb'))
+    await query.message.reply_photo(open('bec_bot/admin.jpg', 'rb'))
     await query.message.reply_text("🏛️The Bapatla Engineering College(Autonomous).\n\n"
                                    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
                                    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
@@ -401,6 +401,9 @@ async def rankings_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("You've clicked Rankings")
+    if query.data == 'rankings':
+        with open("bec_bot/NAAC.jpg", 'rb') as photo:
+            await context.bot.send_photo(chat_id=query.message.chat_id, photo=photo)
     await query.message.reply_text("""
       🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
                                    
@@ -408,6 +411,30 @@ async def rankings_button_callback(update, context) -> None:
                                    
        We're proud to solidify our status as a leading institution in higher education, shining bright as a beacon of quality and innovation in learning. 🌈💫
                                    """)
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+
+async def admission_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("You've clicked Admission process")
+    await query.message.reply_text(""" 
+    🌈 EAMCET Gateway 🚀: Unlock your future with admissions through the prestigious Engineering, Agriculture, and Medical Common Entrance Test. Dive into your dream career with us!
+
+    🏗️ Advance with ECET 🎓: Elevate your technical expertise! Diploma holders can leap into engineering degrees through the Engineering Common Entrance Test.
+
+    🤍 Empowering Specially-Abled Students ♿: Our inclusive seats ensure a barrier-free, empowering learning journey for specially-abled achievers. Your potential is limitless here!
+
+    ✨ Flexible Donation Seats 🏫: Missed EAMCET or ECET? No worries! Our donation seats offer a second chance to step into your desired field. Plus, donation contributions are branch-specific, ensuring opportunities are as diverse as your dreams.
+                                   
+    🎉 A Nurturing Academic Environment 📚: We're more than a college; we're a community committed to fostering diversity, excellence, and innovation. Join us to create, inspire, and succeed together!
+    """)
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -485,8 +512,8 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
 
-#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
@@ -507,6 +534,7 @@ app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placem
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
 app.add_handler(CallbackQueryHandler(rankings_button_callback, pattern='rankings'))
 app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
+app.add_handler(CallbackQueryHandler(admission_button_callback, pattern='admission'))
 app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
 app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
 
