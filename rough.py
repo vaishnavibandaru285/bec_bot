@@ -21,21 +21,56 @@ async def message_handler(update, context):
     # Check if the user's message contains concepts related to admission
 
     is_admission_query = any(concept in ["admission", "apply", "join", "application", "seat", "enroll"] for concept in main_concepts)
-    placement = any(concept in ["placements", "job", "offers", "placement", "offer", "jobs"] for concept in main_concepts)
-
+    placement = any(concept in ["placements", "job", "offers", "placement", "offer", "jobs","placed","package"] for concept in main_concepts)
+    courses = any(
+        concept in ["course","courses","departments","depart","cource","cources","subj","subjects","dept","depts","cse","it","aiml","cbds","cb","mech","ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals"] for concept
+        in
+        main_concepts)
     # Construct the response based on the message content
     if is_admission_query:
-        response1 = "To get admission in our college, you can apply through EAMCET, " \
+        response1 = "To get admission in our college, you can apply through EAPCET, " \
                    "lateral entry by ECET, or through a donation."
         await update.message.reply_text(response1)
-        #await update.message.reply_text("Would you like to continue our conversation?")
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
         button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
             [button1, button2]
         ])
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+
+
+    elif placement:
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("Are you looking for this?", reply_markup=keyboard)
         subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2,button9]
+        ])
+        await update.message.reply_text("Are you looking for this?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                        caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
 
 
     else:
@@ -43,18 +78,12 @@ async def message_handler(update, context):
         response2 = "Sorry, I'm still learning. I can only provide information about admissions."
         # Send the response back to the user
         await update.message.reply_text(response2)
-
-'''async def yes_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton('Click to enter query', callback_data='queries')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1]
-    ])
-    await query.message.reply_text("Click the button to chat", reply_markup=keyboard)
-    subprocess.run(['python', index])'''
-
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
 
 async def no_button_callback(update, context) -> None:
     query = update.callback_query
@@ -79,7 +108,6 @@ app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ
 # Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(None,callback=message_handler))
-#app.add_handler(CallbackQueryHandler(yes_button_callback, pattern='yes'))
 app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
 
 # Start the bot by polling
