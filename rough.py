@@ -1,6 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
-
+import subprocess
+nlprough="D:/nlpbot/rough.py"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -37,6 +38,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     button9 = InlineKeyboardButton('Departments', callback_data='departments')
     button10 = InlineKeyboardButton('Location', callback_data='location')
     button11 = InlineKeyboardButton('Contact Us', callback_data='contact')
+    button12 = InlineKeyboardButton('Any other queries?', callback_data='queries')
 
 
     keyboard = InlineKeyboardMarkup([
@@ -45,7 +47,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
         [button5, button6],
         [button7, button8],
         [button10,button11],
-        [button9]
+        [button9],[button12]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
@@ -53,7 +55,7 @@ async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
 async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('bec_bot/admin.jpg', 'rb'))
+    await query.message.reply_photo(open('admin.jpg', 'rb'))
     await query.message.reply_text("🏛️The Bapatla Engineering College(Autonomous).\n\n"
                                    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
                                    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
@@ -253,8 +255,11 @@ async def result_button_callback(update, context) -> None:
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("The following companies have offered opportunities to our college.")   
-    await query.message.reply_photo(open('company.jpg','rb'))                                                                                                                              
+    await query.message.reply_photo(open('ci.jpg','rb'))
+    await query.message.reply_photo(open('ci1.jpg','rb'))
+    await query.message.reply_photo(open('ci2.jpg','rb'))
+    await query.message.reply_photo(open('ci3.jpg','rb'))
+    await query.message.reply_photo(open('ci4.jpg','rb'))                                                                                                                              
     await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
                                     "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
                                     "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
@@ -514,12 +519,17 @@ async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("Enter your query.")
+    subprocess.run(['python',nlprough])
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
+#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
-
 app.add_handler(CallbackQueryHandler(chat_button_callback, pattern='chat'))
 app.add_handler(CallbackQueryHandler(about_button_callback, pattern='about'))
 app.add_handler(CallbackQueryHandler(courses_button_callback, pattern='courses'))
@@ -539,6 +549,7 @@ app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student')
 app.add_handler(CallbackQueryHandler(admission_button_callback, pattern='admission'))
 app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
 app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
+app.add_handler(CallbackQueryHandler(queries_button_callback, pattern='queries'))
 
 app.add_handler(CallbackQueryHandler(information_button_callback, pattern='information'))
 app.add_handler(CallbackQueryHandler(computer_button_callback, pattern='computer'))
