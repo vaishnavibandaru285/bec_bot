@@ -103,7 +103,7 @@ async def start(update, context):
                                     "Feel free to ask any questions about admission.")
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
 
 # Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))
