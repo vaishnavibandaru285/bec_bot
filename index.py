@@ -22,7 +22,7 @@ async def exit_button_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     keyboard = InlineKeyboardMarkup([
         [button1]
     ])
-    await query.message.reply_text("Have a nice day!\n\n"
+    await query.message.reply_text(f"Have a nice day! {update.effective_user.first_name}\n\n"
                                    "Feel free to visit again\n", reply_markup=keyboard)
 
 
@@ -78,11 +78,13 @@ async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_
     await query.answer()
     button1 = InlineKeyboardButton("B.Tech", callback_data="btech")
     button2 = InlineKeyboardButton("M.Tech", callback_data="mtech")
+    button5 = InlineKeyboardButton("Diploma", callback_data="diploma")
     button3 = InlineKeyboardButton("MCA", callback_data="mca")
     button4 = InlineKeyboardButton("Msc", callback_data="msc")
     keyboard = InlineKeyboardMarkup(
         [
             [button1, button2],
+            [button5],
             [button3, button4]
         ]
     )
@@ -92,19 +94,7 @@ async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_
 async def btech_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    courses_info = """
-           Course         Seats Available
-        AIML   =>  180
-        CB      =>  120
-        CIVIL   =>  120
-        DS   =>  120
-        ECE  => 120
-        EEE  => 120
-        EIE  => 120
-        IT   => 120
-        ME   => 120
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
+    await query.message.reply_photo(open('Bachelor of Technology.jpg', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -117,15 +107,19 @@ async def btech_button_callback(update, context) -> None:
 async def mtech_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    courses_info = """
-           Course         Seats Available
-        Civil =>  6
-        CSE   =>  6
-        ECE   =>  6
-        EEE   =>  6
-        ME    =>  6
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
+    await query.message.reply_photo(open('Master of Technology.jpg', 'rb'))
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def diploma_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_photo(open('Diploma.jpg', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -481,6 +475,7 @@ async def rankings_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("You've clicked Rankings")
+    await query.message.reply_photo(open("ranking.jpg", 'rb'))
     await query.message.reply_photo(open("NAAC.jpg", 'rb'),caption=
     """
       🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
@@ -608,6 +603,7 @@ app.add_handler(CallbackQueryHandler(about_button_callback, pattern='about'))
 app.add_handler(CallbackQueryHandler(courses_button_callback, pattern='courses'))
 app.add_handler(CallbackQueryHandler(btech_button_callback, pattern='btech'))
 app.add_handler(CallbackQueryHandler(mtech_button_callback, pattern='mtech'))
+app.add_handler(CallbackQueryHandler(diploma_button_callback, pattern='diploma'))
 app.add_handler(CallbackQueryHandler(mca_button_callback, pattern='mca'))
 app.add_handler(CallbackQueryHandler(msc_button_callback, pattern='msc'))
 app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facilities'))
