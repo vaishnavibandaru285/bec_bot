@@ -209,16 +209,9 @@ async def transport_button_callback(update, context) -> None:
 async def library_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('library.jpg', 'rb'), caption="1.Area - 22,000sq.ft\n"
-                                                                       "2.No. of volumes - 78,972\n"
-                                                                       "3.No. of e-journals - 725\n"
-                                                                       "4.No. of titles - 29,296\n"
-                                                                       "5.No. of print journals - 86\n"
-                                                                       "6.No. of e-books - 858\n"
-                                                                       "7.No. of computer systems - 35\n"
-                                                                       "8.No. of back volumes of journals - 2,969\n"
-                                                                       "9.No. of NPTEL video courses - 236\n"
-                                                                       "10.No. of educational CD's - 3,261")
+    await query.message.reply_photo(open('library.jpg', 'rb'))
+    await query.message.reply_photo(open('dlic.jpg', 'rb'))
+    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))                                                               
     await query.message.reply_text("Library timings : 7AM - 6PM")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -277,17 +270,18 @@ async def dispensary_button_callback(update, context) -> None:
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('company.jpg', 'rb'),caption =
-        "The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
-        "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
-        "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
-        "Training & Placement Officer\n\n"
-        "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
-        "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
-        "Mobile:: 9849409947\n\n"
-        "Phone:: 08643224244\n\n"
-        "email:: becplacements@yahoo.com\n\n"
-        "placements@becbapatla.ac.in\n")
+    await query.message.reply_text("The following companies have offered opportunities to our college.")   
+    await query.message.reply_photo(open('company.jpg','rb'))                                                                                                                              
+    await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
+                                    "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
+                                    "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
+                                    "Training & Placement Officer\n\n"
+                                    "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
+                                    "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
+                                    "Mobile:: 9849409947\n\n"
+                                    "Phone:: 08643224244\n\n"
+                                    "email:: becplacements@yahoo.com\n\n"
+                                            "placements@becbapatla.ac.in\n")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
