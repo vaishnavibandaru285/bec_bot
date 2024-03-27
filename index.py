@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 import subprocess
 
-rough = "C:/Users/vaish/Desktop/bec_bot/rough.py"
+rough = "rough.py"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -58,12 +58,15 @@ async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
     await query.message.reply_photo(open('admin.jpg', 'rb') , caption =
     "🏛️The Bapatla Engineering College(Autonomous).\n\n"
-                                   "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
-                                   "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
-                                   "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
-                                   "🏛️The College is a little away from the din and bustle of Bapatla, a town with a historic and hoary past, about 75 Km. south of Vijayawada on Chennai-Vijayawada rail route.\n\n"
-                                   "🏛️The college offers B.Tech. Programmes in 8 branches of Engineering:\n"
-                                   "1.Artificial Intelligence and Machine Learning\n2.Civil\n3.Computer Science\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication\n7.Electrical and Electronics\n8.Electronics and Instrumentation\n9.Information Technology\n10.Mechanical Engineering.\n")
+    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
+    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
+    "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
+    "🏆 Certifications: ISO 9001:2015\n\n🏆 NAAC A+ (2023)\n\n🌟 Recognition: Best Engineering College (Careers360)\n\n"
+    "🏛️The college is located a bit outside the busy area of Bapatla, a town with a long and storied history. It's around 75 km south of Vijayawada, along the Chennai-Vijayawada railway route.\n\n"
+    "🏛️The college offers B.Tech. Programmes in 9 branches of Engineering:\n"
+    "1.Computer Science Engineering \n2.Information Technology\n3.Artificial Intelligence and Machine Learning\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication Engineering\n7.Electrical and Electronics Engineering\n8.Civil Engineering \n9.Mechanical Engineering.\n"
+    "\n\n🏆 Legacy: 42 years of excellence as one of the engineering colleges under the Bapatla Education Society.\n")
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -588,7 +591,8 @@ async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_
     subprocess.run(['python', rough])
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
