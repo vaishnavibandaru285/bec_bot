@@ -211,7 +211,7 @@ async def library_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_photo(open('library.jpg', 'rb'))
     await query.message.reply_photo(open('dlic.jpg', 'rb'))
-    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))                                                               
+    await query.message.reply_photo(open('librarytable.jpeg', 'rb'))                                                               
     await query.message.reply_text("Library timings : 7AM - 6PM")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -225,7 +225,7 @@ async def library_button_callback(update, context) -> None:
 async def canteen_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('canteen.jpg', 'rb'),
+    await query.message.reply_photo(open('canteen1.jpg', 'rb'),
                                     caption="A hygienic, well-furnished and well-equipped canteen is available in the campus to provide food at subsidized rates for the staff and students. Purified drinking water is supplied in the college, hostel and canteen.")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -271,7 +271,8 @@ async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("The following companies have offered opportunities to our college.")   
-    await query.message.reply_photo(open('company.jpg','rb'))                                                                                                                              
+    await query.message.reply_photo(open('company.jpg','rb')) 
+    await query.message.reply_text("")                                                                                                                             
     await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
                                     "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
                                     "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
@@ -735,8 +736,8 @@ async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_
     subprocess.run(['python', rough])
 
 
-#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
