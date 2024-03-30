@@ -95,23 +95,26 @@ async def btech_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_photo(open('Bachelor of Technology.jpg', 'rb'))
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
 
 async def mtech_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_photo(open('Master of Technology.jpg', 'rb'))
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -121,9 +124,12 @@ async def diploma_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_photo(open('Diploma.jpg', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -141,10 +147,12 @@ async def mca_button_callback(update, context) -> None:
         ME    =>  6
         """
     await query.message.reply_text(courses_info, parse_mode='Markdown')
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -162,10 +170,12 @@ async def msc_button_callback(update, context) -> None:
         ME    =>  6
         """
     await query.message.reply_text(courses_info, parse_mode='Markdown')
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -178,12 +188,10 @@ async def facilities_button_callback(update, context) -> None:
     button2 = InlineKeyboardButton("Library", callback_data="library")
     button4 = InlineKeyboardButton("Canteen", callback_data="canteen")
     button5 = InlineKeyboardButton("Ladies Hostel", callback_data="hostel")
-    button6 = InlineKeyboardButton("Dispensary", callback_data="dispensary")
     keyboard = InlineKeyboardMarkup(
         [
             [button1, button2],
-            [button4],
-            [button5, button6]
+            [button4,button5]
         ]
     )
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -196,11 +204,14 @@ async def transport_button_callback(update, context) -> None:
                                    "1.BEC - Bapatla(local) - BEC\n"
                                    "2.BEC - Chirala - Pandillapalli - BEC\n"
                                    "3.BEC - Pharmacy Hostel - BEC\n"
+                                   "4.BEC - Repalle - Cherukupalli - BEC\n"
                                     "Total no. of buses available - 11")
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -220,10 +231,12 @@ async def library_button_callback(update, context) -> None:
                                                                        "9.No. of NPTEL video courses - 236\n"
                                                                        "10.No. of educational CD's - 3,261")
     await query.message.reply_text("Library timings : 7AM - 6PM")
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -234,10 +247,12 @@ async def canteen_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_photo(open('canteen.jpg', 'rb'),
                                     caption="A hygienic, well-furnished and well-equipped canteen is available in the campus to provide food at subsidized rates for the staff and students. Purified drinking water is supplied in the college, hostel and canteen.")
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -246,34 +261,21 @@ async def hostel_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_photo(open('hostel.jpg', 'rb'),
-                                    caption="BEC uniquely provides on campus hostel facility to its girl student community\n"
-                                            "This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
-                                            "The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
-                                            "The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+                                    caption="✔️BEC uniquely provides on campus hostel facility to its girl student community\n\n" 
+                                            "✔️This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n\n" 
+                                            "✔️The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n\n" 
+                                            "✔️The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n\n" 
+                                            "✔️The hostel has 24/7 wi-fi facilities.")
+    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
     keyboard = InlineKeyboardMarkup([
+        [button3],
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
-async def dispensary_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('geb.jpg', 'rb'),
-                                    caption="BEC recognizes that physical and mental health significantly influences one’s ability to participate fully in the College community.\n"
-                                            "The Health Center strives to enhance each student’s well being by providing comprehensive, private health care and by encouraging informed, individual involvement on health related decisions.\n"
-                                            "The college has a dispensary to dispose first-aid to students and staff\n"
-                                            "A doctor visits college on regular basis to be available to residents of on campus Girls Hostel.\n"
-                                            "The College also has a dedicated Ambulance service to meet medical emergencies, if any. The students can utilize preferential treatment service by visiting the hospital of visiting doctor in town anytime.")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
@@ -328,8 +330,8 @@ async def civil_button_callback(update, context) -> None:
     await query.message.reply_text("Civil Engineering\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 23\n\n"
-                                   "2.No. of non-teaching staff - 5")
-    await query.message.reply_document(document=open('civil.pdf', 'rb'))
+                                   "2.No. of non-teaching staff - 5\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-CE-SYLLABUS-BOOK.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -371,7 +373,8 @@ async def cse_button_callback(update, context) -> None:
     await query.message.reply_text("Computer Science Engineering\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 33\n\n"
-                                   "2.1.No. of non-teaching staff - 5")
+                                   "2.1.No. of non-teaching staff - 5\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R-20-CSE-Scheme-Syllabus-FINAL.pdf")
     await query.message.reply_document(document=open('cse.pdf', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -387,8 +390,8 @@ async def it_button_callback(update, context) -> None:
     await query.message.reply_text("Information Technology\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 17\n\n"
-                                   "2.No. of non-teaching staff - 1")
-    await query.message.reply_document(document=open('it.pdf', 'rb'))
+                                   "2.No. of non-teaching staff - 1\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/IT_DEPT_R20_SCHEME_Updated.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -418,8 +421,8 @@ async def mech_button_callback(update, context) -> None:
     await query.message.reply_text("Mechanical Engineering\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 25\n\n"
-                                   "2.No. of non-teaching staff - 8")
-    await query.message.reply_document(document=open('ME_R20_Syllabus.pdf', 'rb'))
+                                   "2.No. of non-teaching staff - 8\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/ME_R20_Syllabus.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
     keyboard = InlineKeyboardMarkup([
@@ -432,8 +435,8 @@ async def ece_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_text("Electronics and Communication Engineering\n\n"
                                    "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 31\n\n")
-    await query.message.reply_document(document=open('R20-SYLLABUS-FINAL.pdf', 'rb'))
+                                   "1.No. of teaching staff - 31\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-SYLLABUS-FINAL.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
     keyboard = InlineKeyboardMarkup([
@@ -447,8 +450,8 @@ async def eee_button_callback(update, context) -> None:
     await query.message.reply_text("Electrical & Electronics Engineering\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 25\n\n"
-                                   "2.No. of non-teaching staff - 10")
-    await query.message.reply_document(document=open('eee.pdf', 'rb'))
+                                   "2.No. of non-teaching staff - 10\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-EEE-Syllabus.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
     keyboard = InlineKeyboardMarkup([
@@ -462,8 +465,8 @@ async def eie_button_callback(update, context) -> None:
     await query.message.reply_text("Electronics & Instrumentation Engineering\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 7\n\n"
-                                   "2.No. of non-teaching staff - 3")
-    await query.message.reply_document(document=open('eie.pdf', 'rb'))
+                                   "2.No. of non-teaching staff - 3\n\n"
+                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-SYLLABUS-EIE.pdf")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
     keyboard = InlineKeyboardMarkup([
@@ -611,7 +614,6 @@ app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transpo
 app.add_handler(CallbackQueryHandler(library_button_callback, pattern='library'))
 app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen'))
 app.add_handler(CallbackQueryHandler(hostel_button_callback, pattern='hostel'))
-app.add_handler(CallbackQueryHandler(dispensary_button_callback, pattern='dispensary'))
 app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
 app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
 app.add_handler(CallbackQueryHandler(rankings_button_callback, pattern='rankings'))
