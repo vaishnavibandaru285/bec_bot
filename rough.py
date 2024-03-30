@@ -6,7 +6,7 @@ import subprocess
 # Load the English language model from spaCy
 nlp = spacy.load("en_core_web_sm")
 
-index = "C:/Users/vaish/Desktop/bec_bot/index.py"
+index = "index.py"
 
 
 # Define the function to handle incoming messages
@@ -135,7 +135,8 @@ async def start(update, context):
                                     "Feel free to ask any questions about admission.")
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
+app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 # Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))

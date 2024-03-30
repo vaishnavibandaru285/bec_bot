@@ -1,9 +1,8 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler, MessageHandler
 import subprocess
 
-rough = "C:/Users/vaish/Desktop/bec_bot/rough.py"
-
+rough = "rough.py"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f"Hello👋  {update.effective_user.first_name}\n\n")
@@ -13,7 +12,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         [button1, button2]
     ])
     await update.message.reply_text("Please select an option:", reply_markup=keyboard)
-
 
 async def exit_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
@@ -58,12 +56,15 @@ async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
     await query.message.reply_photo(open('admin.jpg', 'rb') , caption =
     "🏛️The Bapatla Engineering College(Autonomous).\n\n"
-                                   "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
-                                   "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
-                                   "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
-                                   "🏛️The College is a little away from the din and bustle of Bapatla, a town with a historic and hoary past, about 75 Km. south of Vijayawada on Chennai-Vijayawada rail route.\n\n"
-                                   "🏛️The college offers B.Tech. Programmes in 8 branches of Engineering:\n"
-                                   "1.Artificial Intelligence and Machine Learning\n2.Civil\n3.Computer Science\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication\n7.Electrical and Electronics\n8.Electronics and Instrumentation\n9.Information Technology\n10.Mechanical Engineering.\n")
+    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
+    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
+    "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
+    "🏆 Certifications: ISO 9001:2015\n\n🏆 NAAC A+ (2023)\n\n🌟 Recognition: Best Engineering College (Careers360)\n\n"
+    "🏛️The college is located a bit outside the busy area of Bapatla, a town with a long and storied history. It's around 75 km south of Vijayawada, along the Chennai-Vijayawada railway route.\n\n"
+    "🏛️The college offers B.Tech. Programmes in 9 branches of Engineering:\n"
+    "1.Computer Science Engineering \n2.Information Technology\n3.Artificial Intelligence and Machine Learning\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication Engineering\n7.Electrical and Electronics Engineering\n8.Civil Engineering \n9.Mechanical Engineering.\n"
+    "\n\n🏆 Legacy: 42 years of excellence as one of the engineering colleges under the Bapatla Education Society.\n")
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -71,7 +72,6 @@ async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TY
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
 
 async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
@@ -220,16 +220,9 @@ async def transport_button_callback(update, context) -> None:
 async def library_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('library.jpg', 'rb'), caption="1.Area - 22,000sq.ft\n"
-                                                                       "2.No. of volumes - 78,972\n"
-                                                                       "3.No. of e-journals - 725\n"
-                                                                       "4.No. of titles - 29,296\n"
-                                                                       "5.No. of print journals - 86\n"
-                                                                       "6.No. of e-books - 858\n"
-                                                                       "7.No. of computer systems - 35\n"
-                                                                       "8.No. of back volumes of journals - 2,969\n"
-                                                                       "9.No. of NPTEL video courses - 236\n"
-                                                                       "10.No. of educational CD's - 3,261")
+    await query.message.reply_photo(open('library.jpg', 'rb'))
+    await query.message.reply_photo(open('dlic.jpg', 'rb'))
+    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))                                                               
     await query.message.reply_text("Library timings : 7AM - 6PM")
     button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -279,17 +272,18 @@ async def hostel_button_callback(update, context) -> None:
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_photo(open('company.jpg', 'rb'),caption =
-        "The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
-        "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
-        "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
-        "Training & Placement Officer\n\n"
-        "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
-        "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
-        "Mobile:: 9849409947\n\n"
-        "Phone:: 08643224244\n\n"
-        "email:: becplacements@yahoo.com\n\n"
-        "placements@becbapatla.ac.in\n")
+    await query.message.reply_text("The following companies have offered opportunities to our college.")   
+    await query.message.reply_photo(open('company.jpg','rb'))                                                                                                                              
+    await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
+                                    "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
+                                    "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
+                                    "Training & Placement Officer\n\n"
+                                    "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
+                                    "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
+                                    "Mobile:: 9849409947\n\n"
+                                    "Phone:: 08643224244\n\n"
+                                    "email:: becplacements@yahoo.com\n\n"
+                                            "placements@becbapatla.ac.in\n")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -478,7 +472,7 @@ async def rankings_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("You've clicked Rankings")
-    await query.message.reply_photo(open("ranking.jpg", 'rb'))
+    #await query.message.reply_photo(open("ranking.jpg", 'rb'))
     await query.message.reply_photo(open("NAAC.jpg", 'rb'),caption=
     """
       🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
@@ -511,6 +505,26 @@ async def admission_button_callback(update: Update, context: ContextTypes.DEFAUL
 
     🎉 A Nurturing Academic Environment 📚: We're more than a college; we're a community committed to fostering diversity, excellence, and innovation. Join us to create, inspire, and succeed together!
     """)
+
+    cse = InlineKeyboardButton('CSE', callback_data='admcse')
+    it = InlineKeyboardButton('IT', callback_data='admit')
+    cs = InlineKeyboardButton('CS', callback_data='admcs')
+    csm = InlineKeyboardButton('CS&M', callback_data='admcyberml')
+    ds = InlineKeyboardButton('DS', callback_data='admds')
+    ece = InlineKeyboardButton('ECE', callback_data='admece')
+    eee = InlineKeyboardButton('EEE', callback_data='admeee')
+    civil = InlineKeyboardButton('CIVIL', callback_data='admcivil')
+    mech = InlineKeyboardButton('MECH', callback_data='admmech')
+
+    keyboard_b = InlineKeyboardMarkup([
+        [cse,it],
+        [cs,csm],
+        [ds],
+        [ece,eee],
+        [civil,mech]
+    ])
+    await query.message.reply_text("::::\n\n Choose a branch to get cut-off rank details in EAPCET \n\n::::", reply_markup=keyboard_b)
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -518,6 +532,133 @@ async def admission_button_callback(update: Update, context: ContextTypes.DEFAUL
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
+async def admcse(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Computer Science Engineering")
+    await query.message.reply_photo(open('CSE eapcet.jpg', 'rb'), caption= "cutoff rank for CSE dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admit(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Information Technology")
+    await query.message.reply_photo(open('IT eapcet.jpg', 'rb'), caption= "cutoff rank for IT dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admcs(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Cyber Security")
+    await query.message.reply_photo(open('CS eapcet.jpg', 'rb'), caption= "cutoff rank for CS dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admcsml(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Cyber Security & Machine learning")
+    await query.message.reply_photo(open('CSM eapcet.jpg', 'rb'), caption= "cutoff rank for CSM dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admds(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Data Science")
+    await query.message.reply_photo(open('DS eapcet.jpg', 'rb'), caption= "cutoff rank for DS dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+
+async def admece(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Electronics and Communication Engineering")
+    await query.message.reply_photo(open('ECE eapcet.jpg', 'rb'), caption= "cutoff rank for ECE dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admeee(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Electrics & Electronics Engineering")
+    await query.message.reply_photo(open('EEE eapcet.jpg', 'rb'), caption= "cutoff rank for EEE dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admcivil(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen CIVIL Engineering")
+    await query.message.reply_photo(open('CIVIL eapcet.jpg', 'rb'), caption= "cutoff rank for CIVIL dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
+
+async def admmech(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    await query.message.reply_text("you have choosen Mechanical Engineering")
+    await query.message.reply_photo(open('MECH eapcet.jpg', 'rb'), caption= "cutoff rank for MECH dept. in the year 2022-23")
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
+    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
+    keyboard = InlineKeyboardMarkup([
+        [button3],
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
 
 
 async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -597,7 +738,8 @@ async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_
     subprocess.run(['python', rough])
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
@@ -632,4 +774,15 @@ app.add_handler(CallbackQueryHandler(ece_button_callback, pattern='ece'))
 app.add_handler(CallbackQueryHandler(eie_button_callback, pattern='eie'))
 app.add_handler(CallbackQueryHandler(eee_button_callback, pattern='eee'))
 app.add_handler(CallbackQueryHandler(exit_button_callback, pattern='exit'))
+
+app.add_handler(CallbackQueryHandler(admcse,pattern='admcse'))
+app.add_handler(CallbackQueryHandler(admit,pattern='admit'))
+app.add_handler(CallbackQueryHandler(admcs,pattern='admcs'))
+app.add_handler(CallbackQueryHandler(admcsml,pattern='admcyberml'))
+app.add_handler(CallbackQueryHandler(admds,pattern='admds'))
+app.add_handler(CallbackQueryHandler(admece,pattern='admece'))
+app.add_handler(CallbackQueryHandler(admeee,pattern='admeee'))
+app.add_handler(CallbackQueryHandler(admcivil,pattern='admcivil'))
+app.add_handler(CallbackQueryHandler(admmech,pattern='admmech'))
+
 app.run_polling()
