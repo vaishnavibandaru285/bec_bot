@@ -737,9 +737,21 @@ async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_
     await query.message.reply_text(" Please enter your query or question, and I'll do my best to assist you.")
     subprocess.run(['python', rough])
 
+async def no_button_callback(update, context) -> None:
+    query = update.callback_query
+    await query.answer()
+    button1 = InlineKeyboardButton('Menu', callback_data='chat')
+    button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
-#app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+    keyboard = InlineKeyboardMarkup([
+        [button1, button2]
+    ])
+    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+    subprocess.run(['python', rough])
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
 app.add_handler(CommandHandler("start", start))
@@ -784,5 +796,6 @@ app.add_handler(CallbackQueryHandler(admece,pattern='admece'))
 app.add_handler(CallbackQueryHandler(admeee,pattern='admeee'))
 app.add_handler(CallbackQueryHandler(admcivil,pattern='admcivil'))
 app.add_handler(CallbackQueryHandler(admmech,pattern='admmech'))
+app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
 
 app.run_polling()
