@@ -28,13 +28,9 @@ async def message_handler(update, context):
         concept in ["placements", "job", "placement", "jobs", "placed", "package"] for concept in main_concepts)
     courses = any(
         concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept",
-                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
-        main_concepts)
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in main_concepts)
     hostel = any(
-        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay"] for
-        concept
-        in
-        main_concepts)
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay"] for concept in main_concepts)
 
     # Construct the response based on the message content
     if is_admission_query:
@@ -135,8 +131,8 @@ async def start(update, context):
                                     "Feel free to ask any questions about admission.")
 
 
-#app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
-app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
+#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 # Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))
