@@ -21,7 +21,8 @@ async def message_handler(update, context):
     main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
 
     # Check if the user's message contains concepts related to admission
-
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo"] for concept in main_concepts)
     is_admission_query = any(
         concept in ["admission", "apply", "join", "application", "seat", "enroll"] for concept in main_concepts)
     placement = any(
@@ -50,6 +51,16 @@ async def message_handler(update, context):
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
 
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
 
     elif placement:
         await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
@@ -115,17 +126,7 @@ async def message_handler(update, context):
         subprocess.run(['python', index])
 
 
-async def no_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-    subprocess.run(['python', index])
 
 
 
@@ -135,12 +136,11 @@ async def start(update, context):
                                     "Feel free to ask any questions about admission.")
 
 
-#app = ApplicationBuilder().token("6875632213:AAHkE5pLgoEvWRPkdXsZ8_FpzV9UZPLO4lc").build()
-app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
 
 # Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(None, callback=message_handler))
-app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
+
 # Start the bot by polling
 app.run_polling()
