@@ -1,801 +1,1381 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler, MessageHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
 import subprocess
 
-rough = "rough.py"
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f"Hello👋  {update.effective_user.first_name}\n\n")
-    button1 = InlineKeyboardButton('Chat', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await update.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def exit_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton('Chat', callback_data='chat')
-    keyboard = InlineKeyboardMarkup([
-        [button1]
-    ])
-    await query.message.reply_text(f"Have a nice day! {update.effective_user.first_name}\n\n"
-                                   "Feel free to visit again\n", reply_markup=keyboard)
-
-
-async def chat_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton('About', callback_data='about')
-    button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
-    button3 = InlineKeyboardButton('Facilities', callback_data='facilities')
-    button4 = InlineKeyboardButton('Rankings', callback_data='rankings')
-    button5 = InlineKeyboardButton('Student Activities', callback_data='student')
-    button7 = InlineKeyboardButton('Placements', callback_data='placements')
-    button8 = InlineKeyboardButton('Admission process', callback_data='admission')
-    button9 = InlineKeyboardButton('Departments', callback_data='departments')
-    button10 = InlineKeyboardButton('Location', callback_data='location')
-    button11 = InlineKeyboardButton('Contact Us', callback_data='contact')
-    button12 = InlineKeyboardButton('Any queries?', callback_data='queries')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2],
-        [button3, button4],
-        [button5],
-        [button7, button8],
-        [button10, button11],
-        [button9],
-        [button12]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('admin.jpg', 'rb') , caption =
-    "🏛️The Bapatla Engineering College(Autonomous).\n\n"
-    "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
-    "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
-    "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
-    "🏆 Certifications: ISO 9001:2015\n\n🏆 NAAC A+ (2023)\n\n🌟 Recognition: Best Engineering College (Careers360)\n\n"
-    "🏛️The college is located a bit outside the busy area of Bapatla, a town with a long and storied history. It's around 75 km south of Vijayawada, along the Chennai-Vijayawada railway route.\n\n"
-    "🏛️The college offers B.Tech. Programmes in 9 branches of Engineering:\n"
-    "1.Computer Science Engineering \n2.Information Technology\n3.Artificial Intelligence and Machine Learning\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication Engineering\n7.Electrical and Electronics Engineering\n8.Civil Engineering \n9.Mechanical Engineering.\n"
-    "\n\n🏆 Legacy: 42 years of excellence as one of the engineering colleges under the Bapatla Education Society.\n")
-
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton("B.Tech", callback_data="btech")
-    button2 = InlineKeyboardButton("M.Tech", callback_data="mtech")
-    button5 = InlineKeyboardButton("Diploma", callback_data="diploma")
-    button3 = InlineKeyboardButton("MCA", callback_data="mca")
-    button4 = InlineKeyboardButton("Msc", callback_data="msc")
-    keyboard = InlineKeyboardMarkup(
-        [
-            [button1, button2],
-            [button5],
-            [button3, button4]
-        ]
-    )
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def btech_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('Bachelor of Technology.jpg', 'rb'))
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def mtech_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('Master of Technology.jpg', 'rb'))
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def diploma_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('Diploma.jpg', 'rb'))
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def mca_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    courses_info = """
-           Course         Seats Available
-        Civil =>  6
-        CSE   =>  6
-        ECE   =>  6
-        EEE   =>  6
-        ME    =>  6
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def msc_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    courses_info = """
-           Course         Seats Available
-        Civil =>  6
-        CSE   =>  6
-        ECE   =>  6
-        EEE   =>  6
-        ME    =>  6
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def facilities_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton("Transport", callback_data="transport")
-    button2 = InlineKeyboardButton("Library", callback_data="library")
-    button4 = InlineKeyboardButton("Canteen", callback_data="canteen")
-    button5 = InlineKeyboardButton("Ladies Hostel", callback_data="hostel")
-    keyboard = InlineKeyboardMarkup(
-        [
-            [button1, button2],
-            [button4,button5]
-        ]
-    )
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def transport_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('bus.jpg', 'rb'), caption= "Bus facilities from routes :\n"
-                                   "1.BEC - Bapatla(local) - BEC\n"
-                                   "2.BEC - Chirala - Pandillapalli - BEC\n"
-                                   "3.BEC - Pharmacy Hostel - BEC\n"
-                                   "4.BEC - Repalle - Cherukupalli - BEC\n"
-                                    "Total no. of buses available - 11")
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def library_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('library.jpg', 'rb'))
-    await query.message.reply_photo(open('dlic.jpg', 'rb'))
-    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))                                                               
-    await query.message.reply_text("Library timings : 7AM - 6PM")
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def canteen_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('canteen.jpg', 'rb'),
-                                    caption="A hygienic, well-furnished and well-equipped canteen is available in the campus to provide food at subsidized rates for the staff and students. Purified drinking water is supplied in the college, hostel and canteen.")
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def hostel_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_photo(open('hostel.jpg', 'rb'),
-                                    caption="✔️BEC uniquely provides on campus hostel facility to its girl student community\n\n" 
-                                            "✔️This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n\n" 
-                                            "✔️The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n\n" 
-                                            "✔️The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n\n" 
-                                            "✔️The hostel has 24/7 wi-fi facilities.")
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def placements_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("The following companies have offered opportunities to our college.")   
-    await query.message.reply_photo(open('company.jpg','rb'))                                                                                                                              
-    await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
-                                    "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
-                                    "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
-                                    "Training & Placement Officer\n\n"
-                                    "BapatlaEngineeringCollege(www.becbapatla.ac.in)\n\n"
-                                    "Bapatla, Guntur(Dt), AndhraPradesh - 522101.\n\n"
-                                    "Mobile:: 9849409947\n\n"
-                                    "Phone:: 08643224244\n\n"
-                                    "email:: becplacements@yahoo.com\n\n"
-                                            "placements@becbapatla.ac.in\n")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def departments_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton("CIVIL", callback_data="civil")
-    button2 = InlineKeyboardButton("CB", callback_data="cyber")
-    button3 = InlineKeyboardButton("DS", callback_data="ds")
-    button4 = InlineKeyboardButton("AI&ML", callback_data="aiml")
-    button5 = InlineKeyboardButton("CSE", callback_data="computer")
-    button6 = InlineKeyboardButton("ECE", callback_data="electronics")
-    button7 = InlineKeyboardButton("EEE", callback_data="electrical")
-    button8 = InlineKeyboardButton("EIE", callback_data="instruments")
-    button9 = InlineKeyboardButton("IT", callback_data="information")
-    button10 = InlineKeyboardButton("MECH", callback_data="mech")
-
-    keyboard = InlineKeyboardMarkup(
-        [
-            [button1, button2],
-            [button3, button4],
-            [button5, button6],
-            [button7, button8],
-            [button9, button10]
-        ]
-    )
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def civil_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Civil Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 23\n\n"
-                                   "2.No. of non-teaching staff - 5\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-CE-SYLLABUS-BOOK.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def cb_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Cyber Security\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 3\n\n")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-async def ds_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Data Science\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 2\n\n")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def cse_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Computer Science Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 33\n\n"
-                                   "2.1.No. of non-teaching staff - 5\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R-20-CSE-Scheme-Syllabus-FINAL.pdf")
-    await query.message.reply_document(document=open('cse.pdf', 'rb'))
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def it_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Information Technology\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 17\n\n"
-                                   "2.No. of non-teaching staff - 1\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/IT_DEPT_R20_SCHEME_Updated.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def aiml_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Artificial Intelligence & Machine Learning\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 2\n\n")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def mech_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Mechanical Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 25\n\n"
-                                   "2.No. of non-teaching staff - 8\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/ME_R20_Syllabus.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def ece_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Electronics and Communication Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 31\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-SYLLABUS-FINAL.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def eee_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Electrical & Electronics Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 25\n\n"
-                                   "2.No. of non-teaching staff - 10\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-EEE-Syllabus.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def eie_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("Electronics & Instrumentation Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 7\n\n"
-                                   "2.No. of non-teaching staff - 3\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-SYLLABUS-EIE.pdf")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def rankings_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("You've clicked Rankings")
-    #await query.message.reply_photo(open("ranking.jpg", 'rb'))
-    await query.message.reply_photo(open("NAAC.jpg", 'rb'),caption=
-    """
-      🌟Our college is thrilled to announce our recent achievement of an NAAC A+ grade 🏆 with a remarkable score of 3.49 out of 4 in 2023! Additionally, we have consistently secured an NBA ranking over the past 10 years, reinforcing our commitment to excellence in technical and professional education 🛠️📈. 
-
-       This stellar NAAC rating, alongside our sustained NBA recognition, celebrates our steadfast commitment to academic excellence 📚, cutting-edge teaching methodologies 🎓, and holistic student support 🤝. 
-
-       We're proud to solidify our status as a leading institution in higher education, shining bright as a beacon of quality and innovation in learning. 🌈💫
-                                   """)
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def admission_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("You've clicked Admission process")
-    await query.message.reply_text(""" 
-    🌈 EAMCET Gateway 🚀: Unlock your future with admissions through the prestigious Engineering, Agriculture, and Medical Common Entrance Test. Dive into your dream career with us!
-
-    🏗️ Advance with ECET 🎓: Elevate your technical expertise! Diploma holders can leap into engineering degrees through the Engineering Common Entrance Test.
-
-    🤍 Empowering Specially-Abled Students ♿: Our inclusive seats ensure a barrier-free, empowering learning journey for specially-abled achievers. Your potential is limitless here!
-
-    ✨ Flexible Donation Seats 🏫: Missed EAMCET or ECET? No worries! Our donation seats offer a second chance to step into your desired field. Plus, donation contributions are branch-specific, ensuring opportunities are as diverse as your dreams.
-
-    🎉 A Nurturing Academic Environment 📚: We're more than a college; we're a community committed to fostering diversity, excellence, and innovation. Join us to create, inspire, and succeed together!
-    """)
-
-    cse = InlineKeyboardButton('CSE', callback_data='admcse')
-    it = InlineKeyboardButton('IT', callback_data='admit')
-    cs = InlineKeyboardButton('CS', callback_data='admcs')
-    csm = InlineKeyboardButton('CS&M', callback_data='admcyberml')
-    ds = InlineKeyboardButton('DS', callback_data='admds')
-    ece = InlineKeyboardButton('ECE', callback_data='admece')
-    eee = InlineKeyboardButton('EEE', callback_data='admeee')
-    civil = InlineKeyboardButton('CIVIL', callback_data='admcivil')
-    mech = InlineKeyboardButton('MECH', callback_data='admmech')
-
-    keyboard_b = InlineKeyboardMarkup([
-        [cse,it],
-        [cs,csm],
-        [ds],
-        [ece,eee],
-        [civil,mech]
-    ])
-    await query.message.reply_text("::::\n\n Choose a branch to get cut-off rank details in EAPCET \n\n::::", reply_markup=keyboard_b)
-
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-async def admcse(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Computer Science Engineering")
-    await query.message.reply_photo(open('CSE eapcet.jpg', 'rb'), caption= "cutoff rank for CSE dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admit(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Information Technology")
-    await query.message.reply_photo(open('IT eapcet.jpg', 'rb'), caption= "cutoff rank for IT dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admcs(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Cyber Security")
-    await query.message.reply_photo(open('CS eapcet.jpg', 'rb'), caption= "cutoff rank for CS dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admcsml(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Cyber Security & Machine learning")
-    await query.message.reply_photo(open('CSM eapcet.jpg', 'rb'), caption= "cutoff rank for CSM dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admds(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Data Science")
-    await query.message.reply_photo(open('DS eapcet.jpg', 'rb'), caption= "cutoff rank for DS dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-
-async def admece(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Electronics and Communication Engineering")
-    await query.message.reply_photo(open('ECE eapcet.jpg', 'rb'), caption= "cutoff rank for ECE dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admeee(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Electrics & Electronics Engineering")
-    await query.message.reply_photo(open('EEE eapcet.jpg', 'rb'), caption= "cutoff rank for EEE dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admcivil(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen CIVIL Engineering")
-    await query.message.reply_photo(open('CIVIL eapcet.jpg', 'rb'), caption= "cutoff rank for CIVIL dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-async def admmech(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("you have choosen Mechanical Engineering")
-    await query.message.reply_photo(open('MECH eapcet.jpg', 'rb'), caption= "cutoff rank for MECH dept. in the year 2022-23")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-    button3 = InlineKeyboardButton('Back to Admission Process', callback_data='admission')
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please choose an option to continue:", reply_markup=keyboard)
-
-
-async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("You've clicked Student Activities")
-    await query.message.reply_text("""🏛️Join the vibrant student community at our college, where you'll discover an array of opportunities to engage and grow through our diverse range of clubs and activities. Whether you're drawn to community service, leadership development, cultural expression, or creative arts, there's a welcoming space for you to explore and thrive in.
-
-    👮🏽‍♂️Immerse yourself in the spirit of service with clubs like the National Cadet Corps (NCC) and National Service Scheme (NSS), where you can make a meaningful impact through various community initiatives and projects. Develop valuable leadership skills and forge lifelong friendships as you work together towards common goals.
-
-    🎭Indulge your passion for the arts and unleash your creativity with the Creative Arts Club (CCA) and Literary Club(Awaaz). Whether you're an aspiring artist, writer, musician, or actor, you'll find endless opportunities, collaborate with fellow enthusiasts, and showcase your talents to the world.
-
-    🏛️Codeverse, the coding club at your college, offers a dynamic platform for students to enhance their coding skills, engage in practical projects, and connect with like-minded peers.Through participation in coding challenges, and mentorship opportunities, members gain invaluable experience and preparation for tech careers.
-
-    🏛️At our college, the learning doesn't stop at the classroom door. Join us and be a part of an enriching college experience that goes beyond academics, where you can discover your passions, develop new skills, and create memories that will last a lifetime. Come, be a part of our vibrant community and embark on a journey of self-discovery and personal growth.""")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def location_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("You've clicked Location")
-    await query.message.reply_text(
-        "You can navigate through this Google location:\n\n\n https://maps.app.goo.gl/8Xoox4DaG4gd5ZBX7")
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def contact_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text("You've clicked Contact Us")
-    await query.message.reply_text(""" 
-    Bapatla Engineering College
-    Bapatla-522101,
-    Guntur(Dt).,
-    Phone : +91-8643-224244
-    Mobile No: +91-9440730035
-    Fax : +91-8643-224246
-    email:: bec_principal@yahoo.com
-            bec_principal@becbapatla.ac.in                 
-
-    Official pages: https://www.becbapatla.ac.in                                 
-
-    Connect us via:
-    Instagram:: https://www.instagram.com/becbapatlaofficial?igsh=MTNzdWFxZjFjYmxqMA==
-
-    Facebook:: https://www.facebook.com/becbapatlaofficial/
-
-    Twitter:: #BapatlaC
-
-    """)
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    await query.message.reply_text(" Please enter your query or question, and I'll do my best to assist you.")
-    subprocess.run(['python', rough])
-
-async def no_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-    subprocess.run(['python', rough])
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
-#app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
-
+# Register the command handler and message handler
 app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(chat_button_callback, pattern='chat'))
-app.add_handler(CallbackQueryHandler(about_button_callback, pattern='about'))
-app.add_handler(CallbackQueryHandler(courses_button_callback, pattern='courses'))
-app.add_handler(CallbackQueryHandler(btech_button_callback, pattern='btech'))
-app.add_handler(CallbackQueryHandler(mtech_button_callback, pattern='mtech'))
-app.add_handler(CallbackQueryHandler(diploma_button_callback, pattern='diploma'))
-app.add_handler(CallbackQueryHandler(mca_button_callback, pattern='mca'))
-app.add_handler(CallbackQueryHandler(msc_button_callback, pattern='msc'))
-app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facilities'))
-app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transport'))
-app.add_handler(CallbackQueryHandler(library_button_callback, pattern='library'))
-app.add_handler(CallbackQueryHandler(canteen_button_callback, pattern='canteen'))
-app.add_handler(CallbackQueryHandler(hostel_button_callback, pattern='hostel'))
-app.add_handler(CallbackQueryHandler(placements_button_callback, pattern='placements'))
-app.add_handler(CallbackQueryHandler(departments_button_callback, pattern='departments'))
-app.add_handler(CallbackQueryHandler(rankings_button_callback, pattern='rankings'))
-app.add_handler(CallbackQueryHandler(student_button_callback, pattern='student'))
-app.add_handler(CallbackQueryHandler(admission_button_callback, pattern='admission'))
-app.add_handler(CallbackQueryHandler(location_button_callback, pattern='location'))
-app.add_handler(CallbackQueryHandler(contact_button_callback, pattern='contact'))
-app.add_handler(CallbackQueryHandler(queries_button_callback, pattern='queries'))
-app.add_handler(CallbackQueryHandler(it_button_callback, pattern='it'))
-app.add_handler(CallbackQueryHandler(cse_button_callback, pattern='cse'))
-app.add_handler(CallbackQueryHandler(civil_button_callback, pattern='civil'))
-app.add_handler(CallbackQueryHandler(mech_button_callback, pattern='mech'))
-app.add_handler(CallbackQueryHandler(cb_button_callback, pattern='cb'))
-app.add_handler(CallbackQueryHandler(ds_button_callback, pattern='ds'))
-app.add_handler(CallbackQueryHandler(ece_button_callback, pattern='ece'))
-app.add_handler(CallbackQueryHandler(eie_button_callback, pattern='eie'))
-app.add_handler(CallbackQueryHandler(eee_button_callback, pattern='eee'))
-app.add_handler(CallbackQueryHandler(exit_button_callback, pattern='exit'))
+app.add_handler(MessageHandler(None, callback=message_handler))
 
-app.add_handler(CallbackQueryHandler(admcse,pattern='admcse'))
-app.add_handler(CallbackQueryHandler(admit,pattern='admit'))
-app.add_handler(CallbackQueryHandler(admcs,pattern='admcs'))
-app.add_handler(CallbackQueryHandler(admcsml,pattern='admcyberml'))
-app.add_handler(CallbackQueryHandler(admds,pattern='admds'))
-app.add_handler(CallbackQueryHandler(admece,pattern='admece'))
-app.add_handler(CallbackQueryHandler(admeee,pattern='admeee'))
-app.add_handler(CallbackQueryHandler(admcivil,pattern='admcivil'))
-app.add_handler(CallbackQueryHandler(admmech,pattern='admmech'))
-app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
 
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
+app.run_polling()
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler
+import spacy
+import subprocess
+
+# Load the English language model from spaCy
+nlp = spacy.load("en_core_web_sm")
+
+index = "index.py"
+
+
+# Define the function to handle incoming messages
+async def message_handler(update, context):
+    # Get the user's message
+    user_message = update.message.text
+
+    # Process the user's message using spaCy
+    doc = nlp(user_message)
+
+    # Extract the main concepts from the user's message
+    main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+
+    # Check if the user's message contains concepts related to admission
+    greet = any(
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
+    is_admission_query = any(
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
+    placement = any(
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
+    courses = any(
+        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
+    hostel = any(
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
+        concept in main_concepts)
+    transport = any(
+        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
+        concept in main_concepts)
+    # Construct the response based on the message content
+    if is_admission_query:
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif greet:
+        response2 = "Hello!How may i help you?"
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement:
+        await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
+        await update.message.reply_photo(open('p2.jpg', 'rb'),caption="Statistics of students placed year wise")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif courses:
+        button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
+        button9 = InlineKeyboardButton('Departments', callback_data='departments')
+        keyboard = InlineKeyboardMarkup([
+            [button2, button9]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif hostel:
+        await update.message.reply_photo(open('hostel.jpg', 'rb'),
+                                         caption="• BEC uniquely provides on campus hostel facility to its girl student community\n"
+                                                 "• This hostel accommodating 1600 girl students is maintained on self-run basis by students themselves.\n"
+                                                 "• The residents of hostel are provided with 24 hr hot water supply through solar water heaters.\n"
+                                                 "• The students health needs are taken care by dispensary with a visiting doctor and 24/7 ambulance\n")
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+    else:
+        # Default response if the message does not contain relevant information
+        response2 = "Sorry, I'm still learning. I can only provide information about admissions."
+        # Send the response back to the user
+        await update.message.reply_text(response2)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+
+
+# Define the function to start the bot
+async def start(update, context):
+    await update.message.reply_text("Welcome to the College Admission Bot! "
+                                    "Feel free to ask any questions about admission.")
+
+
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+
+# Register the command handler and message handler
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(None, callback=message_handler))
+
+# Start the bot by polling
 app.run_polling()
