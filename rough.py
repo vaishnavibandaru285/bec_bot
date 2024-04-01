@@ -22,34 +22,28 @@ async def message_handler(update, context):
 
     # Check if the user's message contains concepts related to admission
     greet = any(
-        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo"] for concept in main_concepts)
+        concept in ["hi", "hello", "good morning", "good afternoon", "good evening", "hlo" ,"hey", "howdy", "greetings", "salutations", "welcome", "hi there", "morning", "afternoon", "evening"] for concept in main_concepts)
+    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
     is_admission_query = any(
-        concept in ["admission", "apply", "join", "application", "seat", "enroll"] for concept in main_concepts)
+        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
     placement = any(
-        concept in ["placements", "job", "placement", "jobs", "placed", "package"] for concept in main_concepts)
+        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
     courses = any(
         concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept",
-                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in main_concepts)
+                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
+        main_concepts)
     hostel = any(
-        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay"] for concept in main_concepts)
+        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay"] for
+        concept
+        in
+        main_concepts)
 
-    life = any(
-        concept in ["culture", "atmosphere", "ambiance", "environment", "life"] for concept in main_concepts)
-    
-    activites = any(
-        concept in ["clubs","organization","recreation","leisure","non academic","extra curricular"] for concept in main_concepts)
-    
-    canteen=any(
-        concept in ["canteen","special","menu","food","meals","breakfast","lunch","snack"] for concept in main_concepts)
-
-    library=any(
-        concept in ["library","libraries","digital","lib"] for concept in main_concepts)
     # Construct the response based on the message content
     if is_admission_query:
-        await update.message.reply_photo(open('lastrank.jpg', 'rb'))
-        response1 = "To get admission in our college, you can apply through EAPCET, " \
-                    "lateral entry by ECET, or through a donation."
-        await update.message.reply_text(response1)
+        button7 = InlineKeyboardButton('Admission Process', callback_data='admission')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
         button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
@@ -86,7 +80,33 @@ async def message_handler(update, context):
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
 
+    elif location:
+        button7 = InlineKeyboardButton('Location', callback_data='location')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
 
+    elif transport:
+        button7 = InlineKeyboardButton('Facilities', callback_data='facilities')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
 
     elif courses:
         button2 = InlineKeyboardButton('Courses offered', callback_data='courses')
