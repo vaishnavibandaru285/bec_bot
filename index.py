@@ -222,7 +222,7 @@ async def library_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_photo(open('library.jpg', 'rb'))
     await query.message.reply_photo(open('dlic.jpg', 'rb'))
-    await query.message.reply_photo(open('librarytable.jpg', 'rb'))                                                               
+    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))
     await query.message.reply_text("Library timings : 7AM - 6PM")
     button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -272,9 +272,8 @@ async def hostel_button_callback(update, context) -> None:
 async def placements_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("The following companies have offered opportunities to our college.")   
-    await query.message.reply_photo(open('company.jpg','rb')) 
-    await query.message.reply_photo(open('piegraph.jpg','rb'))                                                                                                                            
+    await query.message.reply_text("The following companies have offered opportunities to our college.")
+    await query.message.reply_photo(open('company.jpg','rb'))
     await query.message.reply_text("The Training & Placement Cell is committed to provide all possible assistance to the graduate and post-graduate students to secure employment in multi-national companies and other reputed organizations and industries.\n\n"
                                     "This Cell helps the students to improve skills in related fields (soft skills, resume preparation, practice for interviews, etc) and career guidance.\n\n"
                                     "Frequently this cell conducts number of mock tests to improve the performance in written examinations. The aim is to ensure that students have the information and skills necessary for an effective job search.\n\n"
