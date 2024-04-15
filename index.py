@@ -747,7 +747,7 @@ async def no_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-    subprocess.run(['python', rough])
+
 
 
 app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
@@ -796,6 +796,7 @@ app.add_handler(CallbackQueryHandler(admece,pattern='admece'))
 app.add_handler(CallbackQueryHandler(admeee,pattern='admeee'))
 app.add_handler(CallbackQueryHandler(admcivil,pattern='admcivil'))
 app.add_handler(CallbackQueryHandler(admmech,pattern='admmech'))
-app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
+app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no_button'))
+
 
 app.run_polling()
