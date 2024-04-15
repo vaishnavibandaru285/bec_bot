@@ -26,45 +26,82 @@ async def message_handler(update, context):
     greet= re.compile(
         r'\b(hi|hello|good\s+morning|good\s+afternoon|good\s+evening|hlo|hey|howdy|greetings|salutations|welcome|hi\s+there)\b',
         re.IGNORECASE)
-    location = any( concept in ["location", "place", "loc", "area", "address", "site", "position", "venue", "vicinity", "district", "region", "neighborhood", "locality", "spot", "address"] for concept in main_concepts)
-    is_admission_query = any(
-        concept in ["admission", "apply", "join", "application", "seat", "enroll", "admit", "enrollment", "register", "admittance", "admission process", "entry", "admissions office", "registration", "applying"] for concept in main_concepts)
-    placement = any(
-        concept in ["placements", "job", "placement", "jobs", "placed", "package","career", "employment", "recruitment", "opportunity", "job placement", "career services", "job opportunities", "job market", "employment rate"] for concept in main_concepts)
-    courses = any(
-        concept in ["course", "courses", "departments", "depart", "cource", "cources", "subj", "subjects", "dept", "computer science", "information technology", "artificial intelligence", "machine learning", "data science", "cybersecurity", "civil engineering", "mechanical engineering", "electrical engineering", "electronics and communication engineering",
-                    "depts", "cse", "it", "aiml", "cbds", "cb", "mech", "ece"] for concept in
-        main_concepts)
-    hostel = any(
-        concept in ["hostel","girls", "hostels", "girls hostel", "facilities", "outing", "outings", "hostal", "hostals","accomodation","stay","accommodation", "lodging", "residence", "dormitory", "boarding", "boarding house", "digs", "dorm", "guesthouse", "bed and breakfast", "overnight", "housing", "living quarters", "shelter", "facility", "amenities", "boarding facility", "student living", "college accommodation"] for
-        concept in main_concepts)
-    transport = any(
-        concept in ["bus","college bus", "shuttle service", "campus transport", "bus schedule", "bus route", "bus stop", "bus fare", "bus pass", "bus driver", "bus facility", "transportation service", "shuttle bus", "college transport", "bus timing", "bus pickup", "bus drop-off", "bus route map", "bus registration", "bus availability", "bus capacity"] for
-        concept in main_concepts)
+    location= re.compile(
+        r'\b(?:location|place|loc|area|address|site|position|venue|vicinity|district|region|neighborhood|locality|spot)\b',
+        re.IGNORECASE)
+    is_admission_query= re.compile(
+        r'\b(?:admission|apply|join|application|seat|enroll|admit|enrollment|register|admittance|'
+        r'admission\s+process|entry|admissions\s+office|registration|applying)\b',
+        re.IGNORECASE)
 
-    life = any(
-        concept in ["culture", "atmosphere", "ambiance", "environment", "life"] for concept in main_concepts)
+    placement_it = re.compile(
+        r'\b(?:placements\s+in\s+it|it\s+placements|jobs\s+in\s+it|placed\s+in\s+it|package\s+in\s+it)\b',
+        re.IGNORECASE)
 
-    activites = any(
-        concept in ["clubs", "organization", "recreation", "leisure", "non academic", "extra curricular"
-                    "Sports", "Events", "Workshops", "Competitions", "Games", "Performances", "Exercise",
-                    "Hobbies", "Art", "Crafts", "Dance", "Music", "Volunteering", "Socializing",
-                    "Clubs", "Societies", "Associations", "Teams", "Adventure", "Travel",
-                    "Adventure sports", "Team building", "Skill development", "Networking", "Entertainment",
-                    "Outdoor activities", "Indoor activities"] for concept in
-        main_concepts)
 
-    canteen12 = any(concept in ["canteen", "special", "menu", "food", "meals", "breakfast", "lunch", "snack"
-                                "Cafeteria", "Dining", "Catering", "Refreshments", "Beverages", "Cuisine", "Culinary",
-                                "Buffet", "Takeout", "Dining hall", "Foodservice", "Vending", "Cooking", "Nutritious",
-                                "Ingredients", "Menu options", "Dietary restrictions", "Meal plans", "Food quality",
-                                "Chef","Food safety","Serving","Ordering", "Budget-friendly", "Variety", "Hospitality industry"] for concept in
-        main_concepts)
-    library = any(
-        concept in ["library", "libraries", "digital", "lib","Lib","Books", "Reading", "Knowledge", "Information", "Resources",
-                    "Archives", "Catalog", "Collection", "Reference", "Librarian", "Research", "Literacy", "Database", "Periodicals", "Multimedia",
-                    "Archives", "Study", "Digitalization", "E-books", "Audiobooks", "Manuscripts", "Interlibrary loan",
-                    "Education","Librarianship", "Library card"] for concept in main_concepts)
+    placement_it_24 = re.compile(
+        r'\b(?:it\s+2023-2024|it\s+2023-24|2023-2024\s+it|2023-24\s+it)\b',
+        re.IGNORECASE)
+
+    placement_cse = re.compile(
+        r'\b(?:placements\s+in\s+cse|cse\s+placements|jobs\s+in\s+cse|placed\s+in\s+cse|package\s+in\s+cse|cse\s+in\s+2022-2023|cse\s+2022-23)\b',
+        re.IGNORECASE)
+
+    placement_ece = re.compile(
+        r'\b(?:placements\s+in\s+ece|ece\s+placements|jobs\s+in\s+ece|placed\s+in\s+ece|package\s+in\s+ece)\b',
+        re.IGNORECASE)
+
+    placement_eee = re.compile(
+        r'\b(?:placements\s+in\s+eee|eee\s+placements|jobs\s+in\s+eee|placed\s+in\s+eee|package\s+in\s+eee)\b',
+        re.IGNORECASE)
+
+    placement= re.compile(
+        r'\b(?:placements|job|placement|jobs|placed|package|career|employment|recruitment|'
+        r'opportunity|job\s+placement|career\s+services|job\s+opportunities|job\s+market|employment\s+rate)\b',
+        re.IGNORECASE)
+    courses= re.compile(r'\b(?:course|courses|departments|dept|cource|cources|subj|subjects'
+                        r'|dept|computer\s+science|information\s+technology|artificial\s+intelligence|'
+                        r'machine\s+learning|data\s+science|cyber\s+security|civil\s+engineering|mechanical\s+engineering|'
+                        r'electrical\s+engineering|electronics\s+and\s+communication\s+engineering|depts|cse|it|aiml|cbds|cb|mech|ece)\b', re.IGNORECASE)
+    library = re.compile(
+        r'\b(?:library|libraries|digital|lib|Lib|Books|Reading|Knowledge|Information|Resources|Archives|'
+        r'Catalog|Collection|Reference|Librarian|Research|Literacy|Database|Periodicals|Multimedia|Archives|Study|'
+        r'Digitalization|E-books|Audiobooks|Manuscripts|Interlibrary\s+loan|Education|Librarianship|Library\s+card)\b',
+        re.IGNORECASE)
+
+    canteen12 = re.compile(
+        r'\b(?:canteen|special|menu|food|meals|breakfast|lunch|snack|Cafeteria|Dining|Catering|Refreshments'
+        r'|Beverages|Cuisine|Culinary|Buffet|Takeout|Dining\s+hall|Foodservice|Vending|Cooking|Nutritious|Ingredients|'
+        r'Menu\s+options|Dietary\s+restrictions|Meal\s+plans|Food\s+quality|Chef|Food\s+safety|Serving|Ordering'
+        r'|Budget\s+friendly|Variety|Hospitality\s+industry)\b',
+        re.IGNORECASE)
+
+    activities= re.compile(
+        r'\b(?:clubs|organization|recreation|leisure|non\s+academic|extra\s+curricular|Sports|'
+        r'Events|Workshops|Competitions|Games|Performances|Exercise|Hobbies|Art|Crafts|Dance|Music|Volunteering|'
+        r'Socializing|Clubs|Societies|Associations|Teams|Adventure|Travel|Adventure\s+sports|Team\s+building'
+        r'|Skill\s+development|Networking|Entertainment|Outdoor\s+activities|Indoor\s+activities)\b',
+        re.IGNORECASE)
+
+    life = re.compile(r'\b(?:culture|atmosphere|ambiance|environment|life)\b', re.IGNORECASE)
+
+    transport= re.compile(
+        r'\b(?:bus|college\s+bus|shuttle\s+service|campus\s+transport|bus\s+schedule|bus\s+route'
+        r'|bus\s+stop|bus\s+fare|bus\s+pass|bus\s+driver|bus\s+facility|transportation\s+service|shuttle\s+bus|'
+        r'college\s+transport|bus\s+timing|bus\s+pickup|bus\s+drop\s+off|bus\s+route\s+map|bus\s+registration'
+        r'|bus\s+availability|bus\s+capacity|transport|transport\s+facility|transport\s+facilities)\b',
+        re.IGNORECASE)
+
+    hostel= re.compile(
+        r'\b(?:girls|girls\s+hostel|girls\s+accomodation'
+        r'|girls\s+stay|girls\s+lodging|girls\s+residence|girls\s+dormitory'
+        r'college\s+accommodation)\b',
+        re.IGNORECASE)
+
+    boys_hostel = re.compile(
+        r'\b(?:boys|gents|gent|boy\s+hostel|boys\s+hostals|boys\s+accomodation'
+        r'|male|boys\s+residence|male\s+residence|boys\s+hostel)\b',
+        re.IGNORECASE)
 
     # Construct the response based on the message content
     if is_admission_query.search(user_message):
@@ -84,12 +121,150 @@ async def message_handler(update, context):
         response2 = "Hello!How may i help you?"
         await update.message.reply_text(response2)
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no_button')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement_it.search(user_message):
+        await update.message.reply_photo(open('IT.png', 'rb'),
+                                         caption="Percentage of students placed in the year 2022 , 2023 & 2024")
+        await update.message.reply_text("31 students from Information Technology have placed in the year 2022-2023.\n"
+                                        "Below are the companies , which have recruited the students from information Technology :\n"
+                                        "* Tata Consultancy Services(Ninja)\n"
+                                        "* Tata Consultancy Service (Digital)\n"
+                                        "* Delloit\n"
+                                        "* Hexaware Technologies\n"
+                                        "* Snovasys\n"
+                                        "* Talent Pace Pvt. Ltd.\n"
+                                        "* KJ Systems\n"
+                                        "* Virtusa\n"
+                                        "* CareMonitor\n"
+                                        "* Mitsogo\n"
+                                        "* Eflair Technologies\n"
+                                        "* BrighTex Bio-Photonics(BTBP)\n"
+                                        "* TuringMinds")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("To Know more about placements in BEC, click the below button", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
         button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
             [button1, button2]
         ])
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
+
+    elif placement_it_24.search(user_message):
+        await update.message.reply_photo(open('IT.png', 'rb'),
+                                         caption="Percentage of students placed in the year 2022 , 2023 & 2024")
+        await update.message.reply_text("22 students from Information Technology have placed in the year 2023-2024.\n"
+                                        "Below are the companies , which have recruited the students from information Technology :\n"
+                                        "* Accenture\n"
+                                        "* T-Machine software solutions\n"
+                                        "* ExcelR solutions\n"
+                                        "* Snovasys\n"
+                                        "* Numetry Technologies\n"
+                                        "* KJ systems")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("To Know more about placements in BEC, click the below button", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement_cse.search(user_message):
+        await update.message.reply_photo(open('cse.png', 'rb'),
+                                         caption="Percentage of students placed in the year 2022 , 2023 & 2024")
+        await update.message.reply_text("96 students from Computer Science & Engineering have placed in the year 2022-2023.\n"
+                                        "Below are the companies , which have recruited the students from Computer Science & Engineering :\n"
+                                        "* Tata Consultancy Services(Ninja)\n"
+                                        "* Tata Consultancy Service (Digital)\n"
+                                        "* Delloit\n"
+                                        "* Hexaware Technologies\n"
+                                        "* Snovasys\n"
+                                        "* Talent Pace Pvt. Ltd.\n"
+                                        "* KJ Systems\n"
+                                        "* CareMonitor\n"
+                                        "* Eflair Technologies\n"
+                                        "* TuringMinds\n"
+                                        "* ThunderSoft\n"
+                                        "* Polomon Instruments pvt. ltd.\n"
+                                        "* Efftronics\n"
+                                        "* Tech Mahindra\n"
+                                        "* Cadsys")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("To Know more about placements in BEC, click the below button", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement_ece.search(user_message):
+        await update.message.reply_photo(open('ECE.png', 'rb'),
+                                         caption="Percentage of students placed in the year 2022 , 2023 & 2024")
+        await update.message.reply_text("21 students from Electronics & Communication Engineering have placed in the year 2022-2023.\n"
+                                        "Below are the companies , which have recruited the students from Electronics & Communication Engineering :\n"
+                                        "* Tata Consultancy Services(Ninja)\n"
+                                        "* Tata Consultancy Service (Digital)\n"
+                                        "* Deloitte consulting services\n"
+                                        "* System soft\n"
+                                        "* Birla soft\n"
+                                        "* HCL Tech"
+                                        "* Hexaware Technologies\n"
+                                        "* Code young\n"
+                                        "* Tech Mahindra\n"
+                                        "* ThunderSoft\n")
+
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("To Know more about placements in BEC, click the below button", reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
+    elif placement_eee.search(user_message):
+        await update.message.reply_photo(open('eee_placement.png', 'rb'),
+                                         caption="EEE : Percentage of students placed in the year 2022 , 2023 & 2024")
+        button7 = InlineKeyboardButton('Placements', callback_data='placements')
+        keyboard = InlineKeyboardMarkup([
+            [button7]
+        ])
+        await update.message.reply_text("To Know more about placements in BEC, click the below button",
+                                        reply_markup=keyboard)
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
 
     elif placement.search(user_message):
         await update.message.reply_photo(open('p1.jpg', 'rb'),caption="Department wise placed students in the year 2022-23")
@@ -165,6 +340,20 @@ async def message_handler(update, context):
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
 
+    elif boys_hostel.search(user_message):
+        await update.message.reply_text("No, BEC does not provide accomodation facilities for male students.\n"
+                                        "Click the below button to know more about facilities provided in Bapatla Enginnering College")
+        button_facility = InlineKeyboardButton('Facilities', callback_data='facilities')
+
+        button1 = InlineKeyboardButton('Yes', callback_data='queries')
+        button2 = InlineKeyboardButton('No', callback_data='no')
+        keyboard = InlineKeyboardMarkup([
+            [button_facility],
+            [button1, button2]
+        ])
+        await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
+        subprocess.run(['python', index])
+
     elif life.search(user_message):
         reslife = "The BTech program offers a vibrant campus life with diverse academic, social, and extracurricular activities. Rigorous coursework, experienced faculty, and hands-on learning foster critical thinking and problem-solving skills.\nOutside the classroom, students enjoy a lively social scene with clubs, events, and sports teams, fostering lifelong friendships. Modern facilities, including libraries and labs, support academic success, while career services and internships prepare students for post-graduation success.\n\nOverall, campus life in the BTech program is dynamic, supportive, and provides ample opportunities for personal growth."
 
@@ -177,7 +366,7 @@ async def message_handler(update, context):
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
 
-    elif activites.search(user_message):
+    elif activities.search(user_message):
         act = "Our college offers a vibrant array of clubs and organizations catering to diverse interests and fostering personal development. The Cultural and Creative Arts Club (CCA) celebrates cultural diversity through events such as dance competitions and art exhibitions.\n\nAWAAZ provides a platform for honing public speaking and debate skills through workshops and competitions.\n\nMeanwhile, the National Cadet Corps (NCC) instills discipline, leadership, and patriotism through training and community service.\n\n The National Service Scheme (NSS) engages students in social service activities like cleanliness drives and blood donation camps, promoting social responsibility.\n\n Lastly, the Codeverse Club focuses on computer programming and technology skills development, offering coding workshops and projects to encourage innovation and entrepreneurship. These clubs collectively enrich campus life, providing students with opportunities for growth, engagement, and connection."
 
         await update.message.reply_text(act)
@@ -235,12 +424,13 @@ async def message_handler(update, context):
     # Send the response back to the user
         await update.message.reply_text(response2)
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
-        button2 = InlineKeyboardButton('No', callback_data='no')
+        button2 = InlineKeyboardButton('No', callback_data='no_button')
         keyboard = InlineKeyboardMarkup([
             [button1, button2]
         ])
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
-        subprocess.run(['python', index])
+
+
 
 # Define the function to start the bot
 async def start(update, context):
