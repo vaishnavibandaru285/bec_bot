@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler, MessageHandler
 import subprocess
 
-rough = "rough.py"
+nlp = "nlp.py"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f"Hello👋  {update.effective_user.first_name}\n\n")
@@ -59,11 +59,13 @@ async def about_button_callback(update: Update, context: ContextTypes.DEFAULT_TY
     "🏛️One of the seven educational institutions sponsored by the Bapatla Education Society.\n\n"
     "🏛️Established in 1981 with a vision to impart quality technical education.\n\n"
     "🏛️Affiliated to Acharya Nagarjuna University.\n\n"
-    "🏆 Certifications: ISO 9001:2015\n\n🏆 NAAC A+ (2023)\n\n🌟 Recognition: Best Engineering College (Careers360)\n\n"
+    "🏆 Certifications: ISO 9001:2015\n\n🏆 NAAC A+ (2023)\n\n"
+    "🏆 NBA accredation for branches CSE , Civil and Mechanical Engineering for academic years 2023-2024 to 2026-2027\n\n"
+    "🌟 Recognition: Best Engineering College (Careers360)\n\n"
     "🏛️The college is located a bit outside the busy area of Bapatla, a town with a long and storied history. It's around 75 km south of Vijayawada, along the Chennai-Vijayawada railway route.\n\n"
     "🏛️The college offers B.Tech. Programmes in 9 branches of Engineering:\n"
-    "1.Computer Science Engineering \n2.Information Technology\n3.Artificial Intelligence and Machine Learning\n4.Cyber Security\n5.Data Science\n6.Electrical and Communication Engineering\n7.Electrical and Electronics Engineering\n8.Civil Engineering \n9.Mechanical Engineering.\n"
-    "\n\n🏆 Legacy: 42 years of excellence as one of the engineering colleges under the Bapatla Education Society.\n")
+    "🏆 Legacy: 43 years of excellence as one of the engineering colleges under the Bapatla Education Society.\n\n"
+    "EAPCET code : BECB")
 
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -79,13 +81,10 @@ async def courses_button_callback(update: Update, context: ContextTypes.DEFAULT_
     button1 = InlineKeyboardButton("B.Tech", callback_data="btech")
     button2 = InlineKeyboardButton("M.Tech", callback_data="mtech")
     button5 = InlineKeyboardButton("Diploma", callback_data="diploma")
-    button3 = InlineKeyboardButton("MCA", callback_data="mca")
-    button4 = InlineKeyboardButton("Msc", callback_data="msc")
     keyboard = InlineKeyboardMarkup(
         [
             [button1, button2],
             [button5],
-            [button3, button4]
         ]
     )
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
@@ -124,52 +123,6 @@ async def diploma_button_callback(update, context) -> None:
     await query.answer()
     await query.message.reply_photo(open('Diploma.jpg', 'rb'))
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def mca_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    courses_info = """
-           Course         Seats Available
-        Civil =>  6
-        CSE   =>  6
-        ECE   =>  6
-        EEE   =>  6
-        ME    =>  6
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
-    button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
-    button1 = InlineKeyboardButton('Menu', callback_data='chat')
-    button2 = InlineKeyboardButton('Exit', callback_data='exit')
-
-    keyboard = InlineKeyboardMarkup([
-        [button3],
-        [button1, button2]
-    ])
-    await query.message.reply_text("Please select an option:", reply_markup=keyboard)
-
-
-async def msc_button_callback(update, context) -> None:
-    query = update.callback_query
-    await query.answer()
-    courses_info = """
-           Course         Seats Available
-        Civil =>  6
-        CSE   =>  6
-        ECE   =>  6
-        EEE   =>  6
-        ME    =>  6
-        """
-    await query.message.reply_text(courses_info, parse_mode='Markdown')
     button3 = InlineKeyboardButton('Previous⏮️', callback_data='courses')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -221,8 +174,8 @@ async def library_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     await query.message.reply_photo(open('library.jpg', 'rb'))
+    await query.message.reply_photo(open('librarytable.jpg', 'rb'))
     await query.message.reply_photo(open('dlic.jpg', 'rb'))
-    await query.message.reply_photo(open('library-volume-table.jpeg', 'rb'))
     await query.message.reply_text("Library timings : 7AM - 6PM")
     button3 = InlineKeyboardButton('Previous⏮️', callback_data='facilities')
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -297,14 +250,14 @@ async def departments_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
     button1 = InlineKeyboardButton("CIVIL", callback_data="civil")
-    button2 = InlineKeyboardButton("CB", callback_data="cyber")
-    button3 = InlineKeyboardButton("DS", callback_data="ds")
-    button4 = InlineKeyboardButton("AI&ML", callback_data="aiml")
-    button5 = InlineKeyboardButton("CSE", callback_data="computer")
-    button6 = InlineKeyboardButton("ECE", callback_data="electronics")
-    button7 = InlineKeyboardButton("EEE", callback_data="electrical")
-    button8 = InlineKeyboardButton("EIE", callback_data="instruments")
-    button9 = InlineKeyboardButton("IT", callback_data="information")
+    button2 = InlineKeyboardButton("CSE(CB)", callback_data="cb")
+    button3 = InlineKeyboardButton("CSE(DS)", callback_data="ds")
+    button4 = InlineKeyboardButton("CSE(AI&ML)", callback_data="aiml")
+    button5 = InlineKeyboardButton("CSE", callback_data="cse")
+    button6 = InlineKeyboardButton("ECE", callback_data="ece")
+    button7 = InlineKeyboardButton("EEE", callback_data="eee")
+    button8 = InlineKeyboardButton("EIE", callback_data="eie")
+    button9 = InlineKeyboardButton("IT", callback_data="it")
     button10 = InlineKeyboardButton("MECH", callback_data="mech")
 
     keyboard = InlineKeyboardMarkup(
@@ -337,7 +290,7 @@ async def civil_button_callback(update, context) -> None:
 async def cb_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("Cyber Security\n\n"
+    await query.message.reply_text("CSE(Cyber Security)\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 3\n\n")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -350,7 +303,7 @@ async def cb_button_callback(update, context) -> None:
 async def ds_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("Data Science\n\n"
+    await query.message.reply_text("CSE(Data Science)\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 2\n\n")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -397,7 +350,7 @@ async def it_button_callback(update, context) -> None:
 async def aiml_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("Artificial Intelligence & Machine Learning\n\n"
+    await query.message.reply_text("CSE(Artificial Intelligence & Machine Learning)\n\n"
                                    "Total no. of Staff :\n\n"
                                    "1.No. of teaching staff - 2\n\n")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
@@ -665,15 +618,26 @@ async def student_button_callback(update: Update, context: ContextTypes.DEFAULT_
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("You've clicked Student Activities")
-    await query.message.reply_text("""🏛️Join the vibrant student community at our college, where you'll discover an array of opportunities to engage and grow through our diverse range of clubs and activities. Whether you're drawn to community service, leadership development, cultural expression, or creative arts, there's a welcoming space for you to explore and thrive in.
+    await query.message.reply_text("Bapatla Engineering College provides various activities other than acedamics.\n"
+                                   "1.Awaaz\n"
+                                   "2.CCA\n"
+                                   "3.NCC\n"
+                                   "4.NSS\n"
+                                   "5.CodeVerse\n\n"
+                                   "1.Awaaz : It is an interacting hub of Bapatla Engineering College students, which.\n"
+                                   "✔ Provides a platform to open.\n"
+                                   "✔ Includes a fondness to English language.\n"
+                                   "✔ Helps the students groom their personalities and make them self- confident.\n"
+                                   "✔ Helps the members do away with the menace of stag fear.\n\n"
+                                   "2.CCA : The student members of CCA meet twice in a week and conduct sessions for a regular practice in their respective talents. There are 4 main streams in CCA(but not restricted to)\n"
+                                   "✔ Arts\n"
+                                   "✔ Dance\n"
+                                   "✔ Dramatics\n"
+                                   "✔ Singing\n\n"
+                                   "3.NCC : The NCC provides exposure to the cadets in a wide range of activities., with a distinct emphasis on Social Services, Discipline and Adventure Training. The NCC is open to all regular students of schools and colleges on a voluntary basis. The students have no liability for active military service.\n\n"
+                                   "4.NSS : National Service Scheme, under the Ministry of Youth Affairs & Sports Govt. of India, popularly known as NSS was launched on Gandhiji’s Birth Centenary Year 1969, in 37 Universities involving 40,000 students.\n Bapatla Engineering College was allotted three National Service Scheme Units by Acharya Nagarjuna University and appointed the three program officers.\n\n"
+                                   "5.CodeVerse : It is learning opportunity for the students who are intrested in coding . The club helps you to learn competitive coding in a easier way and also conducts various competitions to enhance your skills.")
 
-    👮🏽‍♂️Immerse yourself in the spirit of service with clubs like the National Cadet Corps (NCC) and National Service Scheme (NSS), where you can make a meaningful impact through various community initiatives and projects. Develop valuable leadership skills and forge lifelong friendships as you work together towards common goals.
-
-    🎭Indulge your passion for the arts and unleash your creativity with the Creative Arts Club (CCA) and Literary Club(Awaaz). Whether you're an aspiring artist, writer, musician, or actor, you'll find endless opportunities, collaborate with fellow enthusiasts, and showcase your talents to the world.
-
-    🏛️Codeverse, the coding club at your college, offers a dynamic platform for students to enhance their coding skills, engage in practical projects, and connect with like-minded peers.Through participation in coding challenges, and mentorship opportunities, members gain invaluable experience and preparation for tech careers.
-
-    🏛️At our college, the learning doesn't stop at the classroom door. Join us and be a part of an enriching college experience that goes beyond academics, where you can discover your passions, develop new skills, and create memories that will last a lifetime. Come, be a part of our vibrant community and embark on a journey of self-discovery and personal growth.""")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -687,7 +651,7 @@ async def location_button_callback(update: Update, context: ContextTypes.DEFAULT
     query = update.callback_query
     await query.answer()
     await query.message.reply_text("You've clicked Location")
-    await query.message.reply_text(
+    await query.message.reply_text("GBC Rd, Mahatmajipuram, Bapatla, Andhra Pradesh 522102, India\n"
         "You can navigate through this Google location:\n\n\n https://maps.app.goo.gl/8Xoox4DaG4gd5ZBX7")
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
@@ -735,7 +699,7 @@ async def queries_button_callback(update: Update, context: ContextTypes.DEFAULT_
     query = update.callback_query
     await query.answer()
     await query.message.reply_text(" Please enter your query or question, and I'll do my best to assist you.")
-    subprocess.run(['python', rough])
+    subprocess.run(['python', nlp])
 
 async def no_button_callback(update, context) -> None:
     query = update.callback_query
@@ -761,8 +725,6 @@ app.add_handler(CallbackQueryHandler(courses_button_callback, pattern='courses')
 app.add_handler(CallbackQueryHandler(btech_button_callback, pattern='btech'))
 app.add_handler(CallbackQueryHandler(mtech_button_callback, pattern='mtech'))
 app.add_handler(CallbackQueryHandler(diploma_button_callback, pattern='diploma'))
-app.add_handler(CallbackQueryHandler(mca_button_callback, pattern='mca'))
-app.add_handler(CallbackQueryHandler(msc_button_callback, pattern='msc'))
 app.add_handler(CallbackQueryHandler(facilities_button_callback, pattern='facilities'))
 app.add_handler(CallbackQueryHandler(transport_button_callback, pattern='transport'))
 app.add_handler(CallbackQueryHandler(library_button_callback, pattern='library'))
@@ -796,7 +758,7 @@ app.add_handler(CallbackQueryHandler(admece,pattern='admece'))
 app.add_handler(CallbackQueryHandler(admeee,pattern='admeee'))
 app.add_handler(CallbackQueryHandler(admcivil,pattern='admcivil'))
 app.add_handler(CallbackQueryHandler(admmech,pattern='admmech'))
-app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no_button'))
+app.add_handler(CallbackQueryHandler(no_button_callback, pattern='no'))
 
 
 app.run_polling()

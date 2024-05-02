@@ -20,27 +20,33 @@ async def message_handler(update, context):
     # Extract the main concepts from the user's message
     main_concepts = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
     import re
+    main_concepts_lower = [concept.lower() for concept in main_concepts]
 
+    # Check for specific keywords in the main concepts
+    if "placement" in main_concepts_lower and "information" in main_concepts_lower and "technology" in main_concepts_lower:
+        # If the keywords are present, provide the respective result
+        await update.message.reply_text("The placement rate in the Information Technology department is 20%.")
+        return
     # Define a regular expression pattern for greetings
 
     greet= re.compile(
         r'\b(hi|hello|good\s+morning|good\s+afternoon|good\s+evening|hlo|hey|howdy|greetings|salutations|welcome|hi\s+there)\b',
         re.IGNORECASE)
     location= re.compile(
-        r'\b(?:location|place|loc|area|address|site|position|venue|vicinity|district|region|neighborhood|locality|spot)\b',
+        r'\b(?:location|located|place|loc|area|address|site|position|venue|vicinity|district|region|neighborhood|locality|spot)\b',
         re.IGNORECASE)
     is_admission_query= re.compile(
         r'\b(?:admission|apply|join|application|seat|enroll|admit|enrollment|register|admittance|'
         r'admission\s+process|entry|admissions\s+office|registration|applying)\b',
         re.IGNORECASE)
 
-    placement_it = re.compile(
+    '''placement_it = re.compile(
         r'\b(?:placements\s+in\s+it|it\s+placements|jobs\s+in\s+it|placed\s+in\s+it|package\s+in\s+it)\b',
         re.IGNORECASE)
 
 
     placement_it_24 = re.compile(
-        r'\b(?:it\s+2023-2024|it\s+2023-24|2023-2024\s+it|2023-24\s+it)\b',
+        r'\b(?:it\s+in\s+2023-2024|it\s+2023-24|2023-2024\s+it|2023-24\s+it)\b',
         re.IGNORECASE)
 
     placement_cse = re.compile(
@@ -59,10 +65,10 @@ async def message_handler(update, context):
         r'\b(?:placements|job|placement|jobs|placed|package|career|employment|recruitment|'
         r'opportunity|job\s+placement|career\s+services|job\s+opportunities|job\s+market|employment\s+rate)\b',
         re.IGNORECASE)
-    courses= re.compile(r'\b(?:course|courses|departments|dept|cource|cources|subj|subjects'
+    courses= re.compile(r'\b(?:course|courses|departments|dept|cource|cources|subj|subjects|branches'
                         r'|dept|computer\s+science|information\s+technology|artificial\s+intelligence|'
                         r'machine\s+learning|data\s+science|cyber\s+security|civil\s+engineering|mechanical\s+engineering|'
-                        r'electrical\s+engineering|electronics\s+and\s+communication\s+engineering|depts|cse|it|aiml|cbds|cb|mech|ece)\b', re.IGNORECASE)
+                        r'electrical\s+engineering|electronics\s+and\s+communication\s+engineering|depts|cse|it|aiml|cbds|cb|mech|ece)\b', re.IGNORECASE)'''
     library = re.compile(
         r'\b(?:library|libraries|digital|lib|Lib|Books|Reading|Knowledge|Information|Resources|Archives|'
         r'Catalog|Collection|Reference|Librarian|Research|Literacy|Database|Periodicals|Multimedia|Archives|Study|'
@@ -99,7 +105,7 @@ async def message_handler(update, context):
         re.IGNORECASE)
 
     boys_hostel = re.compile(
-        r'\b(?:boys|gents|gent|boy\s+hostel|boys\s+hostals|boys\s+accomodation'
+        r'\b(?:boys|gents|gent|boys\s+hostel|boys\s+hostals|boys\s+accomodation'
         r'|male|boys\s+residence|male\s+residence|boys\s+hostel)\b',
         re.IGNORECASE)
 
@@ -109,6 +115,7 @@ async def message_handler(update, context):
         keyboard = InlineKeyboardMarkup([
             [button7]
         ])
+        await update.message.reply_text("We found this based on your query.", reply_markup=keyboard)
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
         button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
@@ -121,14 +128,14 @@ async def message_handler(update, context):
         response2 = "Hello!How may i help you?"
         await update.message.reply_text(response2)
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
-        button2 = InlineKeyboardButton('No', callback_data='no_button')
+        button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
             [button1, button2]
         ])
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
         subprocess.run(['python', index])
 
-    elif placement_it.search(user_message):
+    '''elif placement_it.search(user_message):
         await update.message.reply_photo(open('IT.png', 'rb'),
                                          caption="Percentage of students placed in the year 2022 , 2023 & 2024")
         await update.message.reply_text("31 students from Information Technology have placed in the year 2022-2023.\n"
@@ -284,6 +291,9 @@ async def message_handler(update, context):
         subprocess.run(['python', index])
 
     elif location.search(user_message):
+        await update.message.reply_text("GBC Rd, Mahatmajipuram, Bapatla, Andhra Pradesh 522102, India")
+        await update.message.reply_text("You can click the below link to open the location in Google maps\n"
+                                        "https://maps.app.goo.gl/8Xoox4DaG4gd5ZBX7")
         button7 = InlineKeyboardButton('Location', callback_data='location')
         keyboard = InlineKeyboardMarkup([
             [button7]
@@ -424,12 +434,12 @@ async def message_handler(update, context):
     # Send the response back to the user
         await update.message.reply_text(response2)
         button1 = InlineKeyboardButton('Yes', callback_data='queries')
-        button2 = InlineKeyboardButton('No', callback_data='no_button')
+        button2 = InlineKeyboardButton('No', callback_data='no')
         keyboard = InlineKeyboardMarkup([
             [button1, button2]
         ])
         await update.message.reply_text("Do you need further assistance?", reply_markup=keyboard)
-
+        subprocess.run(['python', index])'''
 
 
 # Define the function to start the bot
@@ -446,3 +456,14 @@ app.add_handler(MessageHandler(None, callback=message_handler))
 
 # Start the bot by polling
 app.run_polling()
+
+
+
+
+
+
+
+
+
+
+
