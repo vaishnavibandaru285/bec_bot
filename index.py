@@ -271,14 +271,23 @@ async def departments_button_callback(update, context) -> None:
     )
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
 async def civil_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("Civil Engineering\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 23\n\n"
-                                   "2.No. of non-teaching staff - 5\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/R20-CE-SYLLABUS-BOOK.pdf")
+    syllabus_link = "http://becbapatla.ac.in/wp-content/uploads/R20-CE-SYLLABUS-BOOK.pdf"
+    syllabus_text = f"<a href='{syllabus_link}'>Syllabus</a>"
+
+    await query.message.reply_text(
+        f"Civil Engineering\n\n"
+        f"Total no. of Staff :\n\n"
+        f"1. No. of teaching staff - 23\n\n"
+        f"2. No. of non-teaching staff - 5\n\n"
+        f"3. Click the link 👉 {syllabus_text}",
+        parse_mode='HTML'
+    )
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -287,12 +296,22 @@ async def civil_button_callback(update, context) -> None:
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
 
+
 async def cb_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("CSE(Cyber Security)\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 3\n\n")
+    syllabus_link = "http://becbapatla.ac.in/wp-content/uploads/R20-CE-SYLLABUS-BOOK.pdf"
+    syllabus_text = f"<a href='{syllabus_link}'>Syllabus</a>"
+
+    await query.message.reply_text(
+        f"Civil Engineering\n\n"
+        f"Total no. of Staff :\n\n"
+        f"1. No. of teaching staff - 3\n\n"
+
+        f"3. Click the link 👉 {syllabus_text}",
+        parse_mode='HTML'
+    )
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -334,11 +353,23 @@ async def cse_button_callback(update, context) -> None:
 async def it_button_callback(update, context) -> None:
     query = update.callback_query
     await query.answer()
-    await query.message.reply_text("Information Technology\n\n"
-                                   "Total no. of Staff :\n\n"
-                                   "1.No. of teaching staff - 17\n\n"
-                                   "2.No. of non-teaching staff - 1\n\n"
-                                   "Syllabus - http://becbapatla.ac.in/wp-content/uploads/IT_DEPT_R20_SCHEME_Updated.pdf")
+    syllabus_r20 = "http://becbapatla.ac.in/wp-content/uploads/R20_Syllabus_IT.pdf"
+    syllabus_20 = f"<a href='{syllabus_r20}'>R20 Syllabus</a>"
+    syllabus_r18 = "http://becbapatla.ac.in/wp-content/uploads/2023/07/BCE1677306345767.pdf"
+    syllabus_18 = f"<a href='{syllabus_r18}'>R18 Syllabus</a>"
+
+    await query.message.reply_text(
+        f"Information Technology\n\n"
+        f"Total no. of Staff :\n\n"
+        f"1. No. of teaching staff - 17\n\n"
+        f"2. No. of non-teaching staff - 1\n\n"
+        f"3. Syllabus "
+        f"  R20👉 {syllabus_20}"
+        f"  R18👉 {syllabus_18}",
+
+        parse_mode='HTML'
+    )
+
     button1 = InlineKeyboardButton('Menu', callback_data='chat')
     button2 = InlineKeyboardButton('Exit', callback_data='exit')
 
@@ -346,6 +377,7 @@ async def it_button_callback(update, context) -> None:
         [button1, button2]
     ])
     await query.message.reply_text("Please select an option:", reply_markup=keyboard)
+
 
 async def aiml_button_callback(update, context) -> None:
     query = update.callback_query
@@ -714,7 +746,7 @@ async def no_button_callback(update, context) -> None:
 
 
 
-app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build()
+app = ApplicationBuilder().token("6765202047:AAG_XQ6b0pnt6wHigRDsgzUU9F9Rv3bpYKQ").build() #bec
 #app = ApplicationBuilder().token("6974619344:AAFlRROokqdH3OpIaOtQ32QKGT6PTqrZhZ8").build()
 
 
