@@ -31,6 +31,9 @@ async def message_handler(update, context):
         r'Socializing|Clubs|Societies|Associations|Teams|Adventure|Travel|Adventure\s+sports|Team\s+building'
         r'|Skill\s+development|Networking|Entertainment|Outdoor\s+activities|Indoor\s+activities)\b',
         re.IGNORECASE)
+    placement_it_24 = re.compile(
+        r'\b(?:it\s+in\s+2023-2024|it\s+2023-24|2023-2024\s+it|2023-24\s+it|placements\s+in\s+it)\b',
+        re.IGNORECASE)
 
 
     if "placement" in main_concepts_lower and "information" in main_concepts_lower and "technology" in main_concepts_lower:
